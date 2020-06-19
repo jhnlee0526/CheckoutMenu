@@ -5,14 +5,12 @@ const connection = mysql.createConnection({
   // database: 'harrySQL_menu',
 });
 
-connection.connect();
+connection.connect((err) => {
+  if (err) {
+    console.log('db connection error: ', err);
+  } else {
+    console.log('Connected: MySQL Started!');
+  }
+});
 
-// connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
-//   if (err) throw err
-
-//   console.log('The solution is: ', rows[0].solution)
-// })
-
-connection.end();
-
-// module.exports = connection;
+module.exports = connection;

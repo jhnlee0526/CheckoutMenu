@@ -42,8 +42,9 @@ const getProperty = (num) => {
   return properties;
 };
 
+// const allProperties = getProperty(2);
 const allProperties = getProperty(100);
-console.log(allProperties);
+// console.log(allProperties);
 
 // FOR RESERVATIONS:
 // generates check in date
@@ -51,38 +52,69 @@ const checkInDate = () => {
   return faker.date.between('2020-06-18', '2020-12-31');
   // moment(faker.date.between('2020-06-18', '2020-12-31')).format('MMM Do YYYY');
 };
-const date = checkInDate();
+// const date = checkInDate();
 
 // create a random nights generator
 const generateNumberOfNights = () => Math.floor(Math.random() * 10) + 1;
-const nights = generateNumberOfNights();
+// const nights = generateNumberOfNights();
 
 // add that many nights to the checkin date to get the checkout date
 const checkOutDate = (startDate, num) => {
-  console.log('date: ', startDate);
-  const checkIn = moment(date).format();
-  return moment(checkIn).add(num, 'days').calendar();
+  // console.log('date: ', startDate, 'nights: ', num);
+  // const checkIn = moment(date).format();
+  // console.log('checkIn: ', checkIn)
+  return moment(startDate).add(num, 'days').calendar();
 };
-console.log('checkout', checkOutDate(date, nights));
+// console.log('checkout', checkOutDate(date, nights));
 
-
-const getReservations = (num) => {
-
+const getPropertyReservations = (resCount, propId, rate) => {
+  const propertyReservations = [];
+  for (let i = 0; i < resCount; i++) {
+    let date = checkInDate();
+    let nights = generateNumberOfNights();
+    let total = (((nights * rate) * 1.1) + 75 + 100).toFixed(2);
+    const reservation = {
+      propertyId: propId,
+      checkIn: moment(date).format('MM/DD/YYYY'),
+      checkOut: checkOutDate(date, nights),
+      nights: nights,
+      nightlyRate: rate,
+      totalCost: total,
+      guestCount: 2,
+      adults: 2,
+      children: 0,
+      infants: 0,
+    };
+    propertyReservations.push(reservation);
+  }
+  return propertyReservations;
 };
 
+//loop through the properties array and for each property, get their id, the nightly rate, and the reservation count, call helper function with those params
+const allReservations = (properties) => {
+  let reservations = [];
+  for (let i = 0; i < properties.length; i++) {
+    let propId = properties[i].id;
+    let rate = properties[i].nightlyRate;
+    let resCount = properties[i].reservationCount;
+    reservations = reservations.concat(getPropertyReservations(resCount, propId, rate));
+  }
+  return reservations;
+};
+console.log(allReservations(allProperties));
 
 /*
 reservations = {
-  id:
-  propertyId:
-  checkInDate:
+  id: //autofilled/incrementing?
+  propertyId: //need to find out how many properties
+  checkInDate: //need to transform this with moments when i call it here
   checkOutDate:
   nights:
-  nightlyRate:
-  totalCost:
-  guestCount:
-  adults:
-  children:
-  infants:
+  nightlyRate:  //will depend on the propertyId
+  totalCost: //math: ((nightly rate * nights) *1.1(taxes & fees) + 75 cleaning + 100 service fee)
+  guestCount: //sum of adults, children, and infants
+  adults: //can set it at 2 for the fake data
+  children: //can set it at 0 for the fake data
+  infants: //can set it at 0 for the fake data
 }
 */
