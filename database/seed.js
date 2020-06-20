@@ -1,5 +1,8 @@
 const faker = require('faker');
 const moment = require('moment');
+const ObjectsToCsv = require('objects-to-csv');
+const db = require('./index.js');
+const fs = require('fs');
 
 // need to generate 100 different properties
 // then need to generate random number of reservations for each property (between 5-10)
@@ -13,8 +16,8 @@ const generateRating = () => (Math.random() + 4).toFixed(2);
 // generates random number of reviews between 50 and 250
 const generateNumberOfReviews = () => Math.floor(Math.random() * 201) + 50;
 
-// generates random number of guests between 2 and 15
-const generateGuestsAllowed = () => Math.floor(Math.random() * 14) + 2;
+// generates random number of guests between 2 and 12
+const generateGuestsAllowed = () => Math.floor(Math.random() * 11) + 2;
 
 // generates random number for each property's reservations
 const generateNumberOfReservations = () => Math.floor(Math.random() * 5) + 5;
@@ -31,11 +34,11 @@ const getProperty = (num) => {
   for (let i = 0; i < numOfProperties; i++) {
     const property = {
       id: i + 1,
-      nightlyRate: generateNightlyRate(),
+      nightly_rate: generateNightlyRate(),
       rating: generateRating(),
       reviews: generateNumberOfReviews(),
-      totalGuestsAllowed: generateGuestsAllowed(),
-      reservationCount: generateNumberOfReservations(),
+      total_guests_allowed: generateGuestsAllowed(),
+      reservation_count: generateNumberOfReservations(),
     };
     properties.push(property);
   }
@@ -48,73 +51,132 @@ const allProperties = getProperty(100);
 
 // FOR RESERVATIONS:
 // generates check in date
-const checkInDate = () => {
-  return faker.date.between('2020-06-18', '2020-12-31');
-  // moment(faker.date.between('2020-06-18', '2020-12-31')).format('MMM Do YYYY');
-};
-// const date = checkInDate();
+const checkInDate = () => faker.date.between('2020-06-18', '2020-12-31');
 
 // create a random nights generator
 const generateNumberOfNights = () => Math.floor(Math.random() * 10) + 1;
-// const nights = generateNumberOfNights();
 
 // add that many nights to the checkin date to get the checkout date
-const checkOutDate = (startDate, num) => {
-  // console.log('date: ', startDate, 'nights: ', num);
-  // const checkIn = moment(date).format();
-  // console.log('checkIn: ', checkIn)
-  return moment(startDate).add(num, 'days').calendar();
-};
-// console.log('checkout', checkOutDate(date, nights));
+const checkOutDate = (startDate, num) => moment(startDate).add(num, 'days').format('YYYY-MM-DD');
 
-const getPropertyReservations = (resCount, propId, rate) => {
+// generates random number of adults between 1 and the max guests allowed
+const generateAdults = (max) => Math.floor(Math.random() * max) + 1;
+
+// generates random number of children between 0 and 2
+const generateChildren = () => Math.floor(Math.random() * 3);
+
+// generates random number of infants between 0 and 2
+const generateInfants = () => Math.floor(Math.random() * 3);
+
+let count = 1;
+
+const getPropertyReservations = (resCount, propId, rate, guests) => {
   const propertyReservations = [];
   for (let i = 0; i < resCount; i++) {
-    let date = checkInDate();
-    let nights = generateNumberOfNights();
-    let total = (((nights * rate) * 1.1) + 75 + 100).toFixed(2);
+    const date = checkInDate();
+    const nights = generateNumberOfNights();
+    const total = (((nights * rate) * 1.1) + 75 + 100).toFixed(2);
+    const adults = generateAdults(guests);
+    let children = generateChildren();
+    let infants = generateInfants();
+    if (adults === guests) {
+      children = 0;
+      infants = 0;
+    } else if (adults + children >= guests) {
+      infants = 0;
+      children = guests - adults;
+    } else if (adults + children + infants > guests) {
+      infants = guests - adults - children;
+    }
+    const totalGuests = (adults + children + infants);
     const reservation = {
-      propertyId: propId,
-      checkIn: moment(date).format('MM/DD/YYYY'),
-      checkOut: checkOutDate(date, nights),
+      id: count,
+      property_id: propId,
+      check_in: moment(date).format('YYYY-MM-DD'),
+      check_out: checkOutDate(date, nights),
       nights: nights,
-      nightlyRate: rate,
-      totalCost: total,
-      guestCount: 2,
-      adults: 2,
-      children: 0,
-      infants: 0,
+      nightly_rate: rate,
+      total_cost: total,
+      guest_count: totalGuests,
+      adults: adults,
+      children: children,
+      infants: infants,
     };
     propertyReservations.push(reservation);
+    count++;
   }
   return propertyReservations;
 };
 
 //loop through the properties array and for each property, get their id, the nightly rate, and the reservation count, call helper function with those params
-const allReservations = (properties) => {
+const generateReservations = (properties) => {
   let reservations = [];
   for (let i = 0; i < properties.length; i++) {
-    let propId = properties[i].id;
-    let rate = properties[i].nightlyRate;
-    let resCount = properties[i].reservationCount;
-    reservations = reservations.concat(getPropertyReservations(resCount, propId, rate));
+    const propId = properties[i].id;
+    const rate = properties[i].nightly_rate;
+    const resCount = properties[i].reservation_count;
+    const guestsAllowed = properties[i].total_guests_allowed;
+    reservations = reservations.concat(getPropertyReservations(resCount, propId, rate, guestsAllowed));
   }
   return reservations;
 };
-console.log(allReservations(allProperties));
+const allReservations = generateReservations(allProperties);
+// console.log(allReservations);
 
-/*
-reservations = {
-  id: //autofilled/incrementing?
-  propertyId: //need to find out how many properties
-  checkInDate: //need to transform this with moments when i call it here
-  checkOutDate:
-  nights:
-  nightlyRate:  //will depend on the propertyId
-  totalCost: //math: ((nightly rate * nights) *1.1(taxes & fees) + 75 cleaning + 100 service fee)
-  guestCount: //sum of adults, children, and infants
-  adults: //can set it at 2 for the fake data
-  children: //can set it at 0 for the fake data
-  infants: //can set it at 0 for the fake data
-}
-*/
+// put my data into the database -- insert allProperties and allReservations
+
+// fs.writeFile('./test.csv', JSON.stringify(allProperties[0]), (err) => {
+//   if (err) {
+//     console.log('error saving property data', err);
+//   } else {
+//     console.log('property data saved!');
+//   }
+// });
+
+// fs.writeFile('./reservationData.csv', allReservations, (err) => {
+//   if (err) {
+//     console.log('error saving reservation data', err);
+//   } else {
+//     console.log('reservation data saved!');
+//   }
+// });
+
+new ObjectsToCsv(allProperties).toDisk('./propertyData.csv');
+
+new ObjectsToCsv(allReservations).toDisk('./reservationData.csv');
+
+// drop all data in the table
+// delete from properties & delete from reservations
+db.query('delete from reservations', (err, result) => {
+  if (err) {
+    console.log('error deleting rows from reservations table: ', err);
+  } else {
+    console.log('all rows from reservations table deleted');
+  }
+});
+
+db.query('delete from properties', (err, result) => {
+  if (err) {
+    console.log('error deleting rows from properties table: ', err);
+  } else {
+    console.log('all rows from properties table deleted');
+  }
+});
+
+const propertyQuery = "load data local infile './propertyData.csv' into table properties fields terminated by ',' enclosed by '\"' lines terminated by '\n' ignore 1 lines";
+db.query(propertyQuery, (err, result) => {
+  if (err) {
+    console.log('error inserting into db: ', err);
+  } else {
+    console.log('data inserted into db: ', result);
+  }
+});
+
+const reservationQuery = "load data local infile './reservationData.csv' into table reservations fields terminated by ',' enclosed by '\"' lines terminated by '\n' ignore 1 lines";
+db.query(reservationQuery, (err, result) => {
+  if (err) {
+    console.log('error inserting into db: ', err);
+  } else {
+    console.log('data inserted into db: ', result);
+  }
+});

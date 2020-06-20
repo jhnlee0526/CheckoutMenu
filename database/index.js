@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 const connection = mysql.createConnection({
   user: 'root',
-  // database: 'harrySQL_menu',
+  database: 'harrySQL_menu',
 });
 
 connection.connect((err) => {
