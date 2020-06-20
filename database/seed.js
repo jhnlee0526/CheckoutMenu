@@ -2,7 +2,7 @@ const faker = require('faker');
 const moment = require('moment');
 const ObjectsToCsv = require('objects-to-csv');
 const db = require('./index.js');
-const fs = require('fs');
+// const fs = require('fs');
 
 // need to generate 100 different properties
 // then need to generate random number of reservations for each property (between 5-10)
@@ -21,12 +21,6 @@ const generateGuestsAllowed = () => Math.floor(Math.random() * 11) + 2;
 
 // generates random number for each property's reservations
 const generateNumberOfReservations = () => Math.floor(Math.random() * 5) + 5;
-
-// console.log('nightly_rate: ', generateNightlyRate);
-// console.log('rating: ', generateRating);
-// console.log('reviews: ', generateNumberOfReviews);
-// console.log('totalGuestsAllowed: ', generateGuestsAllowed);
-// console.log('reservationCount: ', generateNumberOfReservations);
 
 const getProperty = (num) => {
   const numOfProperties = num || 1;
@@ -121,7 +115,6 @@ const generateReservations = (properties) => {
   return reservations;
 };
 const allReservations = generateReservations(allProperties);
-// console.log(allReservations);
 
 // put my data into the database -- insert allProperties and allReservations
 
@@ -151,7 +144,7 @@ db.query('delete from reservations', (err, result) => {
   if (err) {
     console.log('error deleting rows from reservations table: ', err);
   } else {
-    console.log('all rows from reservations table deleted');
+    console.log('all rows from reservations table deleted', result);
   }
 });
 
@@ -159,7 +152,7 @@ db.query('delete from properties', (err, result) => {
   if (err) {
     console.log('error deleting rows from properties table: ', err);
   } else {
-    console.log('all rows from properties table deleted');
+    console.log('all rows from properties table deleted', result);
   }
 });
 
