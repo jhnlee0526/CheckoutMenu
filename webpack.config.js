@@ -1,7 +1,7 @@
 const path = require('path');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
-const DIST_DIR = path.join(__dirname, '/public/dist');
+const DIST_DIR = path.join(__dirname, '/public');
 
 // make sure to handle file types later (icons, css, html) aka asset management
 
@@ -25,5 +25,10 @@ module.exports = {
         },
       },
     ],
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 9000
   },
 };
