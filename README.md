@@ -8,6 +8,9 @@ https://github.com/HarrySQL/Carousel
 https://github.com/HarrySQL/PhotoGallery
 https://github.com/HarrySQL/Reviews
 
+Seed script: "seed": "node database/seed.js"
+Run the script to generate the csv files to load data into database
+
 <!-- Table of Contents
 1. Usage
 2. Requirements
