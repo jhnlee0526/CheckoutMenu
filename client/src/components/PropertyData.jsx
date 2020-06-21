@@ -4,7 +4,7 @@ const PropertyData = (props) => (
   <div>
       <div>
         <span>
-          ${this.state.propertyData.nightly_rate}
+          ${props.data.nightly_rate}
         </span>
         <span> </span>
         <span>
@@ -14,10 +14,10 @@ const PropertyData = (props) => (
       <div>
       <span>
         {/* add the star here */}
-        {this.state.propertyData.rating}
+        {props.data.rating}
       </span>
       <span> </span>
-      <span>({this.state.propertyData.reviews})</span>
+      <span>({props.data.reviews})</span>
       </div>
     </div>
 );

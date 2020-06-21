@@ -2,7 +2,8 @@ import React from 'react';
 
 const Loading = (props) => (
   <div>
-    Loading
+    {/* add a gif here of the loading dots? */}
+    ...
   </div>
 );
 export default Loading;
