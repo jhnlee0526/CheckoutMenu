@@ -1,4 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
+
+// const Info = styled.
 
 const PropertyData = (props) => (
   <div>
@@ -21,6 +24,5 @@ const PropertyData = (props) => (
       </div>
     </div>
 );
-
 
 export default PropertyData;
