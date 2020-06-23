@@ -1,28 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// const Info = styled.
+const Container = styled.div`
+  font: "Helvetica Neue", sans-serif;
+  margin: 5px;
+  text-align: center;
+  overflow: hidden;
+`;
+
+const Left = styled.div`
+  float: left;
+`;
+
+const Right = styled.div`
+  float: right;
+  font-size: 75%;
+  cursor: pointer;
+`;
+
+const Rate = styled.span`
+  font-weight: bold;
+`;
+
+const Star = styled.img`
+  width: 8px;
+  height: auto;
+  margin: 0 3px;
+  cursor: text;
+`;
+
 
 const PropertyData = (props) => (
-  <div>
-      <div>
-        <span>
-          ${props.data.nightly_rate}
-        </span>
-        <span> </span>
-        <span>
-          / night
-        </span>
-      </div>
-      <div>
+  <Container>
+    <Left>
+      <Rate>${props.data.nightly_rate}</Rate>
+      <span> </span>
+      <span>/ night</span>
+    </Left>
+    <Right>
       <span>
-        {/* add the star here */}
-        {props.data.rating}
+        <Star src="https://airbnbavatars.s3-us-west-1.amazonaws.com/icons/star-8-24.png" />
       </span>
+      <span>{props.data.rating}</span>
       <span> </span>
       <span>({props.data.reviews})</span>
-      </div>
-    </div>
+    </Right>
+  </Container>
 );
 
 export default PropertyData;

@@ -15,8 +15,14 @@ const Button = styled.button`
   border: none;
   padding: 8.5px 30px;
   font-size: 70%;
-  margin: 5px 0;
+  margin: 5px;
   width: 100%;
+`;
+
+const Footer = styled.div`
+  font: "Helvetica Neue", sans-serif;
+  text-align: center;
+  font-size: 10px;
 `;
 
 class App extends React.Component {
@@ -94,7 +100,7 @@ class App extends React.Component {
           {dates}
         </div>
         <Button>{button}</Button>
-        <div>{msg}</div>
+        <Footer>{msg}</Footer>
       </div>
     );
   }
