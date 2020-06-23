@@ -5,19 +5,38 @@ import Modal from './CalendarModal.jsx';
 const Container = styled.div`
   border-radius: 5px;
   border: .5px solid #717171;
-  margin: 5px 0;
-  text-align: center;
+  margin: 5px;
   cursor: pointer;
+  overflow: hidden;
 `;
 
-const Dates = styled.div`
+const CheckInDate = styled.div`
   border-radius: 5px;
-  // border: .5px solid #717171;
-  padding: 5px;
+  padding: 10px;
   display: inline-block;
+  text-align: left;
+  float: left;
+  width: 40%;
+  margin: 5px;
 `;
 //on hover, it will be black
 
+const Vertical = styled.div`
+  border-left: 1px solid #717171;
+  height: 10%;
+  position: absolute;
+  left: 50%
+`;
+
+const CheckOutDate = styled.div`
+  border-radius: 5px;
+  padding: 10px;
+  display: inline-block;
+  text-align: left;
+  float: right;
+  width: 40%;
+  margin: 5px;
+`;
 
 //props is nights, lift that back up once we figure out the nights
 class Calendar extends React.Component {
@@ -35,7 +54,6 @@ class Calendar extends React.Component {
   handleClick(e) {
     e.preventDefault();
     //bring up calendar modal
-    console.log('hello');
     this.showModal();
   }
 
@@ -48,14 +66,15 @@ class Calendar extends React.Component {
   render() {
     return (
       <Container onClick={this.handleClick}>
-        <Dates>
+        <CheckInDate>
             <div>CHECK-IN</div>
             <div>Add date</div>
-        </Dates>
-        <Dates>
+        </CheckInDate>
+        <Vertical />
+        <CheckOutDate>
           <div>CHECKOUT</div>
           <div>Add date</div>
-        </Dates>
+        </CheckOutDate>
         <Modal show={this.state.show} />
       </Container>
     );
