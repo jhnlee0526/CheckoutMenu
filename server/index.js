@@ -12,14 +12,15 @@ app.use(express.static('public'));
 app.use(cors());
 app.options('*', cors());
 
-app.get('/api/rooms/:property_id/menu', (req, res) => {
-  db.query('select * from properties', (err, results) => {
+app.get('/api/rooms/:roomId/menu', (req, res) => {
+  console.log(req.params);
+  db.query(`select * from properties where id = ${req.params.roomId}`, (err, results) => {
     if (err) {
       console.log('db query error: ', err);
       res.status(404).send(err);
     } else {
       console.log('db query sent: ', results);
-      res.status(200).send(results);
+      res.status(200).send(results[0]);
     }
   });
 });
