@@ -44,7 +44,6 @@ class DatesView extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    //bring up calendar modal
     this.showModal(e);
   }
 
@@ -57,20 +56,23 @@ class DatesView extends React.Component {
 
   render() {
     return (
-      <div onClick={this.handleClick}>
-        <CheckInDate>
-          <div>CHECK-IN</div>
-          <div>Add date</div>
-        </CheckInDate>
-        <Vertical />
-        <CheckOutDate>
-          <div>CHECKOUT</div>
-          <div>Add date</div>
-        </CheckOutDate>
-
-        <Modal onClick={this.showModal} show={this.state.show} />
+      <div>
+        <div onClick={this.handleClick}>
+          <CheckInDate>
+            <div>CHECK-IN</div>
+            <div>Add date</div>
+          </CheckInDate>
+          <Vertical />
+          <CheckOutDate>
+            <div>CHECKOUT</div>
+            <div>Add date</div>
+          </CheckOutDate>
+        </div>
+        <div>
+          <Modal onClick={this.showModal} show={this.state.show} />
+        </div>
       </div>
-    )
+    );
   }
 }
 

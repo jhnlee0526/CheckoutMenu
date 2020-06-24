@@ -15,6 +15,7 @@ const CloseButton = styled.button`
 `;
 
 const Msg = styled.div`
+  margin: 10px 5px;
   color: #717171;
 `;
 
@@ -22,17 +23,16 @@ class Guests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      adults: 1,
-      children: 0,
-      infants: 0,
+      list: ['Adults', 'Children', 'Infants']
     };
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
-        <SingleGuest guests={this.props.guests} plusClick={this.props.plusClick} minusClick={this.props.minusClick} />
+        {this.state.list.map((item, i) => (
+          <SingleGuest item={item} key={i} adults={this.props.adults} children={this.props.children} infants={this.props.infants} guests={this.props.guests} plusClick={this.props.plusClick} minusClick={this.props.minusClick} />
+        ))}
         <Msg>
           {this.props.guestsAllowed} guests maximum. Infants don't count toward the number of guests.
         </Msg>

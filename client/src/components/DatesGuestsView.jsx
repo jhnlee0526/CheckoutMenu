@@ -37,17 +37,13 @@ class DatesGuestsView extends React.Component {
   }
 
   render() {
-    let dropdown;
-    if (this.props.nights >= 0) {
-      dropdown = <Dropdown guestsAllowed={this.props.guestsAllowed} />;
-    } else {
-      dropdown = '';
-    }
     return (
       <Container>
         <DatesView nights={this.props.nights} checkIn={this.state.checkIn} checkOut={this.state.checkOut} />
         <Line />
-        <Guests>{dropdown}</Guests>
+        <Guests>
+          <Dropdown guestsAllowed={this.props.guestsAllowed} />
+        </Guests>
       </Container>
     );
   }

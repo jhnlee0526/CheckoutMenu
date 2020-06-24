@@ -1,10 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 import Calculations from './Calculations.jsx';
 import Loading from './Loading.jsx';
 import PropertyData from './PropertyData.jsx';
 import DatesGuestsView from './DatesGuestsView.jsx';
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    font-family: Roboto, sans-serif;
+  }
+`;
 
 const Button = styled.button`
   background-color: #ff385c;
@@ -89,6 +96,7 @@ class App extends React.Component {
 
     return (
       <div>
+        <GlobalStyles />
         <div>
           {loadingPage}
         </div>

@@ -10,21 +10,31 @@ const Button = styled.button`
   border: 1px solid #b0b0b0;
 `;
 
-const SingleGuest = (props) => (
-  <div>
-    <span>
-      Adults
-    </span>
-    <span>
-      <Button onClick={props.minusClick}>-</Button>
-    </span>
-    <span>
-      {props.guests}
-    </span>
-    <span>
-      <Button onClick={props.plusClick}>+</Button>
-    </span>
-  </div>
-);
+const SingleGuest = (props) => {
+  let currentGuestCount;
+  if (props.item === 'Adults') {
+    currentGuestCount = props.adults;
+  } else if (props.item === 'Children') {
+    currentGuestCount = props.children;
+  } else {
+    currentGuestCount = props.infants;
+  }
+  return (
+    <div>
+      <span>
+        {props.item}
+      </span>
+      <span>
+        <Button onClick={props.minusClick}>-</Button>
+      </span>
+      <span>
+        {currentGuestCount}
+      </span>
+      <span>
+        <Button onClick={props.plusClick}>+</Button>
+      </span>
+    </div>
+  );
+};
 
 export default SingleGuest;

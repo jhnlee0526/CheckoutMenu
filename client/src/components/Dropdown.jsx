@@ -19,11 +19,13 @@ const Arrow = styled.img`
   margin: 5px;
 `;
 
-
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      adults: 1,
+      children: 0,
+      infants: 0,
       guests: 1,
       dropdown: false,
     };
@@ -46,20 +48,12 @@ class Dropdown extends React.Component {
   }
 
   handlePlusClick(e) {
-    // change state to add to guests on click -- need to use callback?
-    // this.setState(prevState, () => {
-    //   guests: this.state.guests + 1
-    // });
     this.setState((prevState, props) => ({
       guests: prevState.guests + 1,
     }));
   }
 
   handleMinusClick(e) {
-    // change state to subtract from guests on click -- need to use callback?
-    // this.setState(prevState, () => {
-    //   guests: this.state.guests - 1
-    // });
     this.setState((prevState, props) => ({
       guests: prevState.guests - 1,
     }));
@@ -74,7 +68,7 @@ class Dropdown extends React.Component {
     }
     let dropdownMenu;
     if (this.state.dropdown) {
-      dropdownMenu = <Guests guestsAllowed={this.props.guestsAllowed} guests={this.state.guests} plusClick={this.handlePlusClick} minusClick={this.handleMinusClick} handleClick={this.handleClick} />;
+      dropdownMenu = <Guests guestsAllowed={this.props.guestsAllowed} guests={this.state.guests} plusClick={this.handlePlusClick} minusClick={this.handleMinusClick} handleClick={this.handleClick} adults={this.state.adults} children={this.state.children} infants={this.state.infants} />;
     } else {
       dropdownMenu = '';
     }
