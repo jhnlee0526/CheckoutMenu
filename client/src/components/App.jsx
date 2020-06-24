@@ -1,10 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 import Calculations from './Calculations.jsx';
 import Loading from './Loading.jsx';
 import PropertyData from './PropertyData.jsx';
-import Calendar from './Calendar.jsx';
+import DatesGuestsView from './DatesGuestsView.jsx';
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    font-family: Roboto, sans-serif;
+  }
+`;
 
 const Button = styled.button`
   background-color: #ff385c;
@@ -17,6 +24,7 @@ const Button = styled.button`
   font-size: 70%;
   margin: 5px;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Footer = styled.div`
@@ -89,12 +97,16 @@ class App extends React.Component {
 
     return (
       <div>
+        <GlobalStyles />
         <div>
           {loadingPage}
         </div>
         <div>
           {/* checkin/checkout/guets component go here */}
-          <Calendar nights={this.state.nights} />
+          <DatesGuestsView
+            nights={this.state.nights}
+            guestsAllowed={this.state.propertyData.total_guests_allowed}
+          />
         </div>
         <div>
           {dates}

@@ -45,8 +45,8 @@ const Calculations = (props) => {
       </LineItem>
 
       <div>
-        {propsData.map(data => (
-          <CalculationItem data={data} />
+        {propsData.map((data, i) => (
+          <CalculationItem data={data} key={i} />
         ))}
       </div>
 
