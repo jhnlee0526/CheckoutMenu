@@ -2,13 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Modal from './CalendarModal.jsx';
 
-const Container = styled.div`
-  border-radius: 5px;
-  border: .5px solid #717171;
-  margin: 5px;
-  cursor: pointer;
-  overflow: hidden;
-`;
 
 const CheckInDate = styled.div`
   border-radius: 5px;
@@ -19,6 +12,7 @@ const CheckInDate = styled.div`
   width: 40%;
   margin: 5px;
 `;
+
 //on hover, it will be black
 
 const Vertical = styled.div`
@@ -38,13 +32,10 @@ const CheckOutDate = styled.div`
   margin: 5px;
 `;
 
-//props is nights, lift that back up once we figure out the nights
-class Calendar extends React.Component {
+class DatesView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkIn: 0,
-      checkOut: 0,
       show: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -66,20 +57,21 @@ class Calendar extends React.Component {
 
   render() {
     return (
-      <Container onClick={this.handleClick}>
+      <div onClick={this.handleClick}>
         <CheckInDate>
-            <div>CHECK-IN</div>
-            <div>Add date</div>
+          <div>CHECK-IN</div>
+          <div>Add date</div>
         </CheckInDate>
         <Vertical />
         <CheckOutDate>
           <div>CHECKOUT</div>
           <div>Add date</div>
         </CheckOutDate>
+
         <Modal onClick={this.showModal} show={this.state.show} />
-      </Container>
-    );
+      </div>
+    )
   }
 }
 
-export default Calendar
+export default DatesView;

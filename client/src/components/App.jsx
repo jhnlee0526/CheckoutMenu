@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Calculations from './Calculations.jsx';
 import Loading from './Loading.jsx';
 import PropertyData from './PropertyData.jsx';
-import Calendar from './Calendar.jsx';
+import DatesGuestsView from './DatesGuestsView.jsx';
 
 const Button = styled.button`
   background-color: #ff385c;
@@ -94,7 +94,7 @@ class App extends React.Component {
         </div>
         <div>
           {/* checkin/checkout/guets component go here */}
-          <Calendar nights={this.state.nights} />
+          <DatesGuestsView nights={this.state.nights} guestsAllowed={this.state.propertyData.total_guests_allowed} />
         </div>
         <div>
           {dates}

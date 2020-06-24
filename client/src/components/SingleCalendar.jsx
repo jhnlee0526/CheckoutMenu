@@ -7,7 +7,6 @@ const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June:
 class SingleCalendar extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       currentDate: moment(),
       currentMonth: 0,
@@ -105,7 +104,7 @@ class SingleCalendar extends React.Component {
       let blanks = [];
       for (let i = 0; i < this.getFirstDay(eachMonth, currentYear); i++) {
         blanks.push(
-          <td className="empty calendar-day">{""}</td>,
+          <td key={`blank${i}`} className="empty calendar-day">{""}</td>,
         );
       }
 
@@ -113,7 +112,7 @@ class SingleCalendar extends React.Component {
       for (let d = 1; d <= this.getDaysInMonth(eachMonth, currentYear); d++) {
         let current = d == this.currentDay() ? "today" : "";
         allDaysInMonth.push(
-          <td className={`calendar-day ${current}`}>{d}</td>,
+          <td key={`day${d}`} className={`calendar-day ${current}`}>{d}</td>,
         );
       }
 
@@ -132,7 +131,7 @@ class SingleCalendar extends React.Component {
           rows.push(cells);
         }
       });
-      calendarMonth.push(rows.map((d, i) => (<tr>{d}</tr>)));
+      calendarMonth.push(rows.map((d, i) => (<tr key={i}>{d}</tr>)));
       monthsAndYear.push(`${eachMonth} ${currentYear}`);
     }
     // console.log('monthsAndYear', monthsAndYear);

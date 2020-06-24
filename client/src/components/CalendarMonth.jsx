@@ -20,7 +20,7 @@ const CheckOut = styled.span`
 
 const CalendarMonth = (props) => {
   const daysOfWeek = moment.weekdaysMin();
-  const weekdays = daysOfWeek.map((day) => <th className="week-days">{day}</th>);
+  const weekdays = daysOfWeek.map((day, i) => <th key={i} className="week-days">{day}</th>);
   return (
     <Container>
       <CheckIn>
@@ -43,7 +43,7 @@ const CalendarMonth = (props) => {
           <thead>
             <tr>
               <th colSpan="7">{props.month[1]}</th>
-              <button>Arrow</button>
+              {/* <button>Arrow</button> */}
             </tr>
             <tr>
               {weekdays}
