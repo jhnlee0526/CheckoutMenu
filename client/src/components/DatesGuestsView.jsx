@@ -39,7 +39,11 @@ class DatesGuestsView extends React.Component {
   render() {
     return (
       <Container>
-        <DatesView nights={this.props.nights} checkIn={this.state.checkIn} checkOut={this.state.checkOut} />
+        <DatesView
+          nights={this.props.nights}
+          checkIn={this.state.checkIn}
+          checkOut={this.state.checkOut}
+        />
         <Line />
         <Guests>
           <Dropdown guestsAllowed={this.props.guestsAllowed} />

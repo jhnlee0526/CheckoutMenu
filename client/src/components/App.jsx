@@ -24,6 +24,7 @@ const Button = styled.button`
   font-size: 70%;
   margin: 5px;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Footer = styled.div`
@@ -102,7 +103,10 @@ class App extends React.Component {
         </div>
         <div>
           {/* checkin/checkout/guets component go here */}
-          <DatesGuestsView nights={this.state.nights} guestsAllowed={this.state.propertyData.total_guests_allowed} />
+          <DatesGuestsView
+            nights={this.state.nights}
+            guestsAllowed={this.state.propertyData.total_guests_allowed}
+          />
         </div>
         <div>
           {dates}

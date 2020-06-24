@@ -3,7 +3,7 @@ import moment from 'moment';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  cursor: pointer;
+  overflow: hidden;
 `;
 
 const CheckIn = styled.span`
@@ -18,41 +18,52 @@ const CheckOut = styled.span`
   margin: 5px;
 `;
 
+const NextArrow = styled.button`
+  border-radius: 50%;
+  border: none;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background: none;
+  :hover {
+    background-color: #f7f7f7;
+  }
+`;
+
+const PreviousArrow = styled.button`
+  border-radius: 50%;
+  border: none;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background: none;
+  :hover {
+    background-color: #f7f7f7;
+  }
+`;
+
 const CalendarMonth = (props) => {
-  const daysOfWeek = moment.weekdaysMin();
-  const weekdays = daysOfWeek.map((day, i) => <th key={i} className="week-days">{day}</th>);
+  let previousButton;
+  if (props.togglePrevious) {
+    previousButton = <PreviousArrow onClick={props.previousClick}>{'<'}</PreviousArrow>
+  }
+  let nextButton;
+  if (props.toggleNext) {
+    nextButton = <NextArrow onClick={props.nextClick}>{'>'}</NextArrow>
+  }
   return (
     <Container>
       <CheckIn>
-        <table>
-          <thead>
-            <tr>
-              <th colSpan="7">{props.month[0]}</th>
-            </tr>
-            <tr>
-              {weekdays}
-            </tr>
-          </thead>
-          <tbody>
-            {props.calendar[0]}
-          </tbody>
-        </table>
+        <span>
+          {previousButton}
+        </span>
+        <span>{props.month[0]}</span>
       </CheckIn>
       <CheckOut>
-        <table>
-          <thead>
-            <tr>
-              <th colSpan="7">{props.month[1]}</th>
-              {/* <button>Arrow</button> */}
-            </tr>
-            <tr>
-              {weekdays}
-            </tr>
-          </thead>
-          <tbody>
-            {props.calendar[1]}
-          </tbody>
-        </table>
+        <span>{props.month[1]}</span>
+        <span>
+          {nextButton}
+        </span>
       </CheckOut>
     </Container>
   );
