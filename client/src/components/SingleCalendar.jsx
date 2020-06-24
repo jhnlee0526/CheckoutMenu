@@ -1,6 +1,15 @@
 import React from 'react';
 import moment from 'moment';
+import styled from 'styled-components';
 import CalendarMonth from './CalendarMonth.jsx';
+import CalendarView from './CalendarView.jsx';
+
+const Weekdays = styled.span`
+  padding: 2px;
+  // overflow: hidden;
+  text-align: center;
+  // float: left;
+`;
 
 const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12};
 
@@ -46,14 +55,10 @@ class SingleCalendar extends React.Component {
   }
 
   handleNextClick(e) {
-    // e.preventDefault();
-    // on click, set state to be next
-    let oldStart = this.state.start;
-    let oldEnd = this.state.end;
-    this.setState({
-      start: oldStart + 1,
-      end: oldEnd + 1,
-    });
+    this.setState((prevState, props) => ({
+      start: prevState.start + 1,
+      end: prevState.end + 1,
+    }));
     if (!this.state.previous) {
       this.setState({
         previous: true,
@@ -67,20 +72,16 @@ class SingleCalendar extends React.Component {
   }
 
   handlePreviousClick(e) {
-    // e.preventDefault();
-    // on click, set state to be previous
-    let oldStart = this.state.start;
-    let oldEnd = this.state.end;
-    this.setState({
-      start: oldStart - 1,
-      end: oldEnd - 1,
-    });
+    this.setState((prevState, props) => ({
+      start: prevState.start - 1,
+      end: prevState.end - 1,
+    }));
     if (!this.state.next) {
       this.setState({
         next: true,
       });
     }
-    if (this.state.start === 0) {
+    if (this.state.start === 1) {
       this.setState({
         previous: false,
       });
@@ -88,6 +89,8 @@ class SingleCalendar extends React.Component {
   }
 
   render() {
+    const daysOfWeek = moment.weekdaysMin();
+    const weekdays = daysOfWeek.map((day, i) => <Weekdays key={i} className="week-days">{day}</Weekdays>);
     const today = new Date();
     let currentYear = today.getFullYear();
     let calendarMonth = [];
@@ -140,7 +143,15 @@ class SingleCalendar extends React.Component {
     let displayedMonths = monthsAndYear.slice(this.state.start, this.state.end);
     return (
       <div>
-        <CalendarMonth calendar={displayedCals} month={displayedMonths} />
+        <div>
+          <CalendarMonth month={displayedMonths} nextClick={this.handleNextClick} previousClick={this.handlePreviousClick} toggleNext={this.state.next} togglePrevious={this.state.previous} />
+        </div>
+        <div>
+          {weekdays}
+          <span> </span>
+          {weekdays}
+        </div>
+        <CalendarView calendar={displayedCals} />
       </div>
     );
   }

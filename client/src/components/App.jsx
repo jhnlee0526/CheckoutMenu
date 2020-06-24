@@ -24,6 +24,7 @@ const Button = styled.button`
   font-size: 70%;
   margin: 5px;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Footer = styled.div`

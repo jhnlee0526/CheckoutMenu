@@ -4,37 +4,74 @@ import moment from 'moment';
 import SingleCalendar from './SingleCalendar.jsx';
 
 const Modal = styled.div`
-  className: "modal";
-  background: pink;
+  border-radius: 12px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px;
+  // z-index: 2000;
+  position: fixed;
+  padding: 40px;
+  cursor: default;
+  flex-wrap: wrap;
 `;
 
 const Container = styled.div`
   // overflow: hidden;
+  justify-content: center;
+  display: flex;
+  align-items: baseline;
 `;
 
 const Keyboard = styled.button`
-  display: inline-block;
+  display: flex;
   border-radius: 50%;
   width: 50px;
   height: 50px;
   text-align: center;
-  float: left;
-`;
-
-const Close = styled.button`
-  display: inline-block;
-  border-radius: 5px;
-  text-align: center;
-  float: right;
+  // align-items: baseline;
+  justify-content: flex-start;
+  border: none;
+  background: none;
+  :hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+  }
 `;
 
 const Clear = styled.button`
-  display: inline-block;
+  display: flex;
   border-radius: 5px;
   text-align: center;
-  float: right;
+  // align-items: baseline;
+  justify-content: flex-end;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  :hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+  }
+
 `;
 
+const Close = styled.button`
+  display: flex;
+  border-radius: 4px;
+  text-align: center;
+  justify-content: flex-start;
+  // align-items: baseline;
+  border: none;
+  padding: 5px 10px;
+  background: #222222;
+  color: white;
+  :hover {
+    background-color: #000000;
+    cursor: pointer;
+  }
+
+`;
 
 class CalendarModal extends React.Component {
   constructor(props) {
@@ -84,20 +121,29 @@ class CalendarModal extends React.Component {
       return null;
     }
     return (
-      <Modal>
-        <SingleCalendar months={this.state.months} />
-        <div>
-          <span>
-            <Keyboard>Keeb</Keyboard>
-          </span>
-          <span>
-            <Clear>Clear Dates</Clear>
-          </span>
-          <span>
-            <Close onClick={this.handleClose}>Close</Close>
-          </span>
-        </div>
-      </Modal>
+      <div>
+        <Modal>
+          <div>
+            {/* add select dates and the checkin/checkout box here */}
+          </div>
+          <div>
+            <SingleCalendar months={this.state.months} />
+          </div>
+          <div>
+            <Container>
+              <span>
+                <Keyboard>Keeb</Keyboard>
+              </span>
+              <span>
+                <Clear>Clear Dates</Clear>
+              </span>
+              <span>
+                <Close onClick={this.handleClose}>Close</Close>
+              </span>
+            </Container>
+          </div>
+        </Modal>
+      </div>
     );
   }
 }

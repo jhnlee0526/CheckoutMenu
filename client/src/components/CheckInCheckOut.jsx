@@ -44,13 +44,15 @@ class DatesView extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.showModal(e);
+    this.setState({
+      show: true,
+    });
   }
 
   showModal(e) {
     e.preventDefault();
     this.setState({
-      show: !this.state.show,
+      show: false,
     });
   }
 
