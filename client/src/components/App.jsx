@@ -102,7 +102,10 @@ class App extends React.Component {
         </div>
         <div>
           {/* checkin/checkout/guets component go here */}
-          <DatesGuestsView nights={this.state.nights} guestsAllowed={this.state.propertyData.total_guests_allowed} />
+          <DatesGuestsView
+            nights={this.state.nights}
+            guestsAllowed={this.state.propertyData.total_guests_allowed}
+          />
         </div>
         <div>
           {dates}
