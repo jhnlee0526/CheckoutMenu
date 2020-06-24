@@ -25,7 +25,7 @@ const Vertical = styled.div`
   border-left: 1px solid #717171;
   height: 10%;
   position: absolute;
-  left: 50%
+  left: 50%;
 `;
 
 const CheckOutDate = styled.div`
@@ -54,12 +54,13 @@ class Calendar extends React.Component {
   handleClick(e) {
     e.preventDefault();
     //bring up calendar modal
-    this.showModal();
+    this.showModal(e);
   }
 
   showModal(e) {
+    e.preventDefault();
     this.setState({
-      show: true,
+      show: !this.state.show,
     });
   }
 
@@ -75,7 +76,7 @@ class Calendar extends React.Component {
           <div>CHECKOUT</div>
           <div>Add date</div>
         </CheckOutDate>
-        <Modal show={this.state.show} />
+        <Modal onClick={this.showModal} show={this.state.show} />
       </Container>
     );
   }
