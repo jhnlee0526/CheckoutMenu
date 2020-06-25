@@ -11,6 +11,7 @@ const Dropdown = styled.div`
   border-radius: 3px;
   padding: 15px;
   margin: 10px;
+  cursor: default;
 `;
 
 const CloseButton = styled.button`
@@ -20,6 +21,7 @@ const CloseButton = styled.button`
   padding: 6px;
   float: right;
   text-decoration: underline;
+  cursor: pointer;
   :hover {
     background-color: #f7f7f7;
   }
@@ -30,13 +32,14 @@ const Msg = styled.div`
   margin: 10px 5px;
   color: #717171;
   font-size: 10px;
+  cursor: text;
 `;
 
 class Guests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: ['Adults', 'Children', 'Infants']
+      list: ['Adults', 'Children', 'Infants'],
     };
   }
 
@@ -47,12 +50,13 @@ class Guests extends React.Component {
           <SingleGuest
             item={item}
             key={i}
-            adults={this.props.adults}
-            children={this.props.children}
-            infants={this.props.infants}
             guests={this.props.guests}
-            plusClick={this.props.plusClick}
-            minusClick={this.props.minusClick}
+            infants={this.props.infants}
+            guestPlusClick={this.props.guestPlusClick}
+            guestMinusClick={this.props.guestMinusClick}
+            infantPlusClick={this.props.infantPlusClick}
+            infantMinusClick={this.props.infantMinusClick}
+            guestsAllowed={this.props.guestsAllowed}
           />
         ))}
         <Msg>

@@ -12,6 +12,7 @@ const Button = styled.button`
   font-size: 16px;
   padding: 2px;
   margin: 5px;
+  cursor: pointer;
   color: #717171;
   :focus {
     outline:0;
@@ -25,6 +26,7 @@ const EachGuest = styled.div`
 
 const Msg = styled.div`
   font-size: 10px;
+  cursor: text;
 `;
 
 const Category = styled.div`
@@ -39,6 +41,7 @@ const Buttons = styled.div`
 
 const Count = styled.span`
   margin: 5px;
+  cursor: text;
 `;
 
 const TransparentButton = styled.button`
@@ -54,53 +57,116 @@ const TransparentButton = styled.button`
   margin: 5px;
   color: #717171;
   opacity: 0.3;
+  cursor: no-drop;
   :focus {
     outline:0;
   }
 `;
 
-const SingleGuest = (props) => {
-  let currentGuestCount;
-  let msg = '';
-  if (props.item === 'Adults') {
-    currentGuestCount = props.adults;
-  } else if (props.item === 'Children') {
-    currentGuestCount = props.children;
-    msg = 'Ages 2-12';
-  } else {
-    currentGuestCount = props.infants;
-    msg = 'Under 2';
-  }
-  let currentMinusButton;
-  if (currentGuestCount === 0 || (props.item === 'Adults' && currentGuestCount === 1)) {
-    currentMinusButton = <TransparentButton onClick={props.minusClick}>-</TransparentButton>;
-  } else {
-    currentMinusButton = <Button onClick={props.minusClick}>-</Button>;
+const Item = styled.div`
+  cursor: text;
+`;
+
+class SingleGuest extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      adults: 1,
+      children: 0,
+      infants: 0,
+    };
+    this.handlePlusClick = this.handlePlusClick.bind(this);
+    this.handleMinusClick = this.handleMinusClick.bind(this);
   }
 
-  return (
-    <EachGuest>
-      <Category>
-        <div>
-          {props.item}
-        </div>
-        <Msg>
-          {msg}
-        </Msg>
-      </Category>
-      <Buttons>
-        <span>
-          {currentMinusButton}
-        </span>
-        <Count>
-          {currentGuestCount}
-        </Count>
-        <span>
-          <Button onClick={props.plusClick}>+</Button>
-        </span>
-      </Buttons>
-    </EachGuest>
-  );
+  handlePlusClick(e) {
+    if (this.props.item === 'Adults') {
+      this.setState((prevState, props) => ({
+        adults: prevState.adults + 1,
+      }));
+      this.props.guestPlusClick();
+    } else if (this.props.item === 'Children') {
+      this.setState((prevState, props) => ({
+        children: prevState.children + 1,
+      }));
+      this.props.guestPlusClick();
+    } else if (this.props.item === 'Infants') {
+      this.setState((prevState, props) => ({
+        infants: prevState.infants + 1,
+      }));
+      this.props.infantPlusClick();
+    }
+  }
+
+  handleMinusClick(e) {
+    if (this.props.item === 'Adults') {
+      this.setState((prevState, props) => ({
+        adults: prevState.adults - 1,
+      }));
+      this.props.guestMinusClick();
+    } else if (this.props.item === 'Children') {
+      this.setState((prevState, props) => ({
+        children: prevState.children - 1,
+      }));
+      this.props.guestMinusClick();
+    } else if (this.props.item === 'Infants') {
+      this.setState((prevState, props) => ({
+        infants: prevState.infants - 1,
+      }));
+      this.props.infantMinusClick();
+    }
+  }
+
+  render() {
+    let currentGuestCount;
+    let msg = '';
+    if (this.props.item === 'Adults') {
+      currentGuestCount = this.state.adults;
+    } else if (this.props.item === 'Children') {
+      currentGuestCount = this.state.children;
+      msg = 'Ages 2-12';
+    } else {
+      currentGuestCount = this.state.infants;
+      msg = 'Under 2';
+    }
+    let currentMinusButton;
+    if (currentGuestCount === 0 || (this.props.item === 'Adults' && currentGuestCount === 1)) {
+      currentMinusButton = <TransparentButton onClick={this.handleMinusClick}>-</TransparentButton>;
+    } else {
+      currentMinusButton = <Button onClick={this.handleMinusClick}>-</Button>;
+    }
+    let currentPlusButton;
+    if (this.props.guests === this.props.guestsAllowed) {
+      currentPlusButton = <TransparentButton onClick={this.handlePlusClick}>+</TransparentButton>;
+    } else {
+      currentPlusButton = <Button onClick={this.handlePlusClick}>+</Button>;
+    }
+    
+
+    return (
+      <EachGuest>
+        <Category>
+          <Item>
+            {this.props.item}
+          </Item>
+          <Msg>
+            {msg}
+          </Msg>
+        </Category>
+        <Buttons>
+          <span>
+            {currentMinusButton}
+          </span>
+          <Count>
+            {currentGuestCount}
+          </Count>
+          <span>
+            {currentPlusButton}
+          </span>
+        </Buttons>
+      </EachGuest>
+    );
+  }
 };
 
 export default SingleGuest;
