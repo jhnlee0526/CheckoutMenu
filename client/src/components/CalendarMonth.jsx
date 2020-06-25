@@ -25,6 +25,9 @@ const NextArrow = styled.button`
   height: 20px;
   text-align: center;
   background: none;
+  :focus {
+    outline:0;
+  }
   :hover {
     background-color: #f7f7f7;
   }
@@ -37,6 +40,9 @@ const PreviousArrow = styled.button`
   height: 20px;
   text-align: center;
   background: none;
+  :focus {
+    outline:0;
+  }
   :hover {
     background-color: #f7f7f7;
   }

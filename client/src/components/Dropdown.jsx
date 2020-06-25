@@ -5,18 +5,29 @@ import Guests from './Guests.jsx';
 const Container = styled.div`
   cursor: pointer;
   overflow: hidden;
+  // position: relative;
+  // display: inline-block;
 `;
 
 const Guest = styled.span`
   float: left;
 `;
 
-const Arrow = styled.img`
+const DownArrow = styled.img`
   float: right; 
   width: 20px;
   height: auto;
   cursor: pointer;
   margin: 5px;
+`;
+
+const UpArrow = styled.img`
+  float: right; 
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+  margin: 5px;
+  transform: rotate(180deg);
 `;
 
 class Dropdown extends React.Component {
@@ -68,9 +79,26 @@ class Dropdown extends React.Component {
     }
     let dropdownMenu;
     if (this.state.dropdown) {
-      dropdownMenu = <Guests guestsAllowed={this.props.guestsAllowed} guests={this.state.guests} plusClick={this.handlePlusClick} minusClick={this.handleMinusClick} handleClick={this.handleClick} adults={this.state.adults} children={this.state.children} infants={this.state.infants} />;
+      dropdownMenu = (
+        <Guests
+          guestsAllowed={this.props.guestsAllowed}
+          guests={this.state.guests}
+          plusClick={this.handlePlusClick}
+          minusClick={this.handleMinusClick}
+          handleClick={this.handleClick}
+          adults={this.state.adults}
+          children={this.state.children}
+          infants={this.state.infants}
+        />
+      );
     } else {
       dropdownMenu = '';
+    }
+    let arrowDirection;
+    if (this.state.dropdown) {
+      arrowDirection = <UpArrow src="https://img.icons8.com/android/24/000000/expand-arrow.png" />;
+    } else {
+      arrowDirection = <DownArrow src="https://img.icons8.com/android/24/000000/expand-arrow.png" />;
     }
 
     return (
@@ -85,7 +113,7 @@ class Dropdown extends React.Component {
             </div>
           </Guest>
           <span>
-            <Arrow src="https://img.icons8.com/android/24/000000/expand-arrow.png" />
+            {arrowDirection}
           </span>
         </Container>
         <div>

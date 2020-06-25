@@ -2,6 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import SingleGuest from './SingleGuest.jsx';
 
+const Dropdown = styled.div`
+  display: block;
+  position: absolute;
+  width: 80%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 16px;
+  background: white;
+  border-radius: 3px;
+  padding: 15px;
+  margin: 10px;
+`;
+
 const CloseButton = styled.button`
   border-radius: 6px;
   border: none;
@@ -12,11 +23,13 @@ const CloseButton = styled.button`
   :hover {
     background-color: #f7f7f7;
   }
+  font-size: 12px;
 `;
 
 const Msg = styled.div`
   margin: 10px 5px;
   color: #717171;
+  font-size: 10px;
 `;
 
 class Guests extends React.Component {
@@ -29,9 +42,18 @@ class Guests extends React.Component {
 
   render() {
     return (
-      <div>
+      <Dropdown>
         {this.state.list.map((item, i) => (
-          <SingleGuest item={item} key={i} adults={this.props.adults} children={this.props.children} infants={this.props.infants} guests={this.props.guests} plusClick={this.props.plusClick} minusClick={this.props.minusClick} />
+          <SingleGuest
+            item={item}
+            key={i}
+            adults={this.props.adults}
+            children={this.props.children}
+            infants={this.props.infants}
+            guests={this.props.guests}
+            plusClick={this.props.plusClick}
+            minusClick={this.props.minusClick}
+          />
         ))}
         <Msg>
           {this.props.guestsAllowed} guests maximum. Infants don't count toward the number of guests.
@@ -39,7 +61,7 @@ class Guests extends React.Component {
         <div>
           <CloseButton onClick={this.props.handleClick}>Close</CloseButton>
         </div>
-      </div>
+      </Dropdown>
     );
   }
 }
