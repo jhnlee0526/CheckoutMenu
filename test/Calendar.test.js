@@ -2,7 +2,7 @@ import React from 'react';
 import { mount, shallow, render } from 'enzyme';
 import CalendarModal from '../client/src/components/CalendarModal.jsx';
 // import CalendarView from '../client/src/components/CalendarView.jsx';
-// import CalendarMonth from '../client/src/components/CalendarMonth.jsx';
+// import CalendarModal from '../client/src/components/CalendarModal.jsx';
 
 
 describe('<CalendarModal /> rendering', () => {
@@ -13,9 +13,10 @@ describe('<CalendarModal /> rendering', () => {
   });
 });
 
-// describe('<CalendarMonth />', () => {
-//   it('CalendarMonth should render two tables', () => {
-//     const wrapper = shallow(<CalendarMonth />);
-//     expect(wrapper.children('span')).toHaveBeenCalled();
+// describe('<CalendarView />', () => {
+//   it('CalendarView should render two tables', () => {
+//     const wrapper = shallow(<CalendarView />);
+//     expect(wrapper.exists()).toBe(true);
+//     expect(wrapper.find('table').length).toBe(2);
 //   });
 // });
