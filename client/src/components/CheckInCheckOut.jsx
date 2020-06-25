@@ -9,7 +9,7 @@ const CheckInDate = styled.div`
   display: inline-block;
   text-align: left;
   float: left;
-  width: 40%;
+  width: 135px;
   margin: 5px;
 `;
 
@@ -17,9 +17,9 @@ const CheckInDate = styled.div`
 
 const Vertical = styled.div`
   border-left: 1px solid #717171;
-  height: 10%;
+  height: 68px;
   position: absolute;
-  left: 50%;
+  left: 190px;
 `;
 
 const CheckOutDate = styled.div`
@@ -28,7 +28,7 @@ const CheckOutDate = styled.div`
   display: inline-block;
   text-align: left;
   float: right;
-  width: 40%;
+  width: 135px;
   margin: 5px;
 `;
 

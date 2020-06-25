@@ -5,13 +5,15 @@ import Guests from './Guests.jsx';
 const Container = styled.div`
   cursor: pointer;
   overflow: hidden;
+  // position: relative;
+  // display: inline-block;
 `;
 
 const Guest = styled.span`
   float: left;
 `;
 
-const Arrow = styled.img`
+const DownArrow = styled.img`
   float: right; 
   width: 20px;
   height: auto;
@@ -19,20 +21,29 @@ const Arrow = styled.img`
   margin: 5px;
 `;
 
+const UpArrow = styled.img`
+  float: right; 
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+  margin: 5px;
+  transform: rotate(180deg);
+`;
+
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      adults: 1,
-      children: 0,
-      infants: 0,
       guests: 1,
+      infants: 0,
       dropdown: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.showDropdown = this.showDropdown.bind(this);
-    this.handlePlusClick = this.handlePlusClick.bind(this);
-    this.handleMinusClick = this.handleMinusClick.bind(this);
+    this.handleGuestPlusClick = this.handleGuestPlusClick.bind(this);
+    this.handleGuestMinusClick = this.handleGuestMinusClick.bind(this);
+    this.handleInfantPlusClick = this.handleInfantPlusClick.bind(this);
+    this.handleInfantMinusClick = this.handleInfantMinusClick.bind(this);
   }
 
   handleClick(e) {
@@ -47,15 +58,27 @@ class Dropdown extends React.Component {
     });
   }
 
-  handlePlusClick(e) {
+  handleGuestPlusClick(e) {
     this.setState((prevState, props) => ({
       guests: prevState.guests + 1,
     }));
   }
 
-  handleMinusClick(e) {
+  handleGuestMinusClick(e) {
     this.setState((prevState, props) => ({
       guests: prevState.guests - 1,
+    }));
+  }
+
+  handleInfantPlusClick(e) {
+    this.setState((prevState, props) => ({
+      infants: prevState.infants + 1,
+    }));
+  }
+
+  handleInfantMinusClick(e) {
+    this.setState((prevState, props) => ({
+      infants: prevState.infants - 1,
     }));
   }
 
@@ -68,9 +91,33 @@ class Dropdown extends React.Component {
     }
     let dropdownMenu;
     if (this.state.dropdown) {
-      dropdownMenu = <Guests guestsAllowed={this.props.guestsAllowed} guests={this.state.guests} plusClick={this.handlePlusClick} minusClick={this.handleMinusClick} handleClick={this.handleClick} adults={this.state.adults} children={this.state.children} infants={this.state.infants} />;
+      dropdownMenu = (
+        <Guests
+          guestsAllowed={this.props.guestsAllowed}
+          guests={this.state.guests}
+          infants={this.state.infants}
+          guestPlusClick={this.handleGuestPlusClick}
+          guestMinusClick={this.handleGuestMinusClick}
+          infantPlusClick={this.handleInfantPlusClick}
+          infantMinusClick={this.handleInfantMinusClick}
+          handleClick={this.handleClick}
+
+        />
+      );
     } else {
       dropdownMenu = '';
+    }
+    let arrowDirection;
+    if (this.state.dropdown) {
+      arrowDirection = <UpArrow src="https://img.icons8.com/android/24/000000/expand-arrow.png" />;
+    } else {
+      arrowDirection = <DownArrow src="https://img.icons8.com/android/24/000000/expand-arrow.png" />;
+    }
+    let totalInfants;
+    if (this.state.infants === 1) {
+      totalInfants = `, ${this.state.infants} infant`;
+    } else if (this.state.infants > 1) {
+      totalInfants = `, ${this.state.infants} infants`;
     }
 
     return (
@@ -81,11 +128,16 @@ class Dropdown extends React.Component {
               GUESTS
             </div>
             <div>
-              {this.state.guests} {guests}
+              <span>
+                {this.state.guests} {guests}
+              </span>
+              <span>
+                {totalInfants}
+              </span>
             </div>
           </Guest>
           <span>
-            <Arrow src="https://img.icons8.com/android/24/000000/expand-arrow.png" />
+            {arrowDirection}
           </span>
         </Container>
         <div>

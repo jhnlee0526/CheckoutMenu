@@ -10,11 +10,12 @@ const Modal = styled.div`
   justify-content: center;
   align-items: center; 
   box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px;
-  // z-index: 2000;
   position: fixed;
-  padding: 40px;
+  padding: 10px;
   cursor: default;
   flex-wrap: wrap;
+  width: 350px
+  height: 400px;
 `;
 
 const Container = styled.div`

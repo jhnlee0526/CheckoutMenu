@@ -2,6 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import SingleGuest from './SingleGuest.jsx';
 
+const Dropdown = styled.div`
+  display: block;
+  position: absolute;
+  width: 350px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 16px;
+  border: .5px solid #dddddd;
+  background: white;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 10px;
+  cursor: default;
+`;
+
 const CloseButton = styled.button`
   border-radius: 6px;
   border: none;
@@ -9,29 +22,43 @@ const CloseButton = styled.button`
   padding: 6px;
   float: right;
   text-decoration: underline;
+  cursor: pointer;
   :hover {
     background-color: #f7f7f7;
   }
+  font-size: 12px;
 `;
 
 const Msg = styled.div`
   margin: 10px 5px;
   color: #717171;
+  font-size: 10px;
+  cursor: text;
 `;
 
 class Guests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: ['Adults', 'Children', 'Infants']
+      list: ['Adults', 'Children', 'Infants'],
     };
   }
 
   render() {
     return (
-      <div>
+      <Dropdown>
         {this.state.list.map((item, i) => (
-          <SingleGuest item={item} key={i} adults={this.props.adults} children={this.props.children} infants={this.props.infants} guests={this.props.guests} plusClick={this.props.plusClick} minusClick={this.props.minusClick} />
+          <SingleGuest
+            item={item}
+            key={i}
+            guests={this.props.guests}
+            infants={this.props.infants}
+            guestPlusClick={this.props.guestPlusClick}
+            guestMinusClick={this.props.guestMinusClick}
+            infantPlusClick={this.props.infantPlusClick}
+            infantMinusClick={this.props.infantMinusClick}
+            guestsAllowed={this.props.guestsAllowed}
+          />
         ))}
         <Msg>
           {this.props.guestsAllowed} guests maximum. Infants don't count toward the number of guests.
@@ -39,7 +66,7 @@ class Guests extends React.Component {
         <div>
           <CloseButton onClick={this.props.handleClick}>Close</CloseButton>
         </div>
-      </div>
+      </Dropdown>
     );
   }
 }
