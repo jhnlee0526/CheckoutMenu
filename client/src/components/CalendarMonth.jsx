@@ -18,6 +18,10 @@ const CheckOut = styled.span`
   margin: 5px;
 `;
 
+const Month = styled.span`
+  justify-content: center;
+`;
+
 const NextArrow = styled.button`
   border-radius: 50%;
   border: none;
@@ -63,10 +67,10 @@ const CalendarMonth = (props) => {
         <span>
           {previousButton}
         </span>
-        <span>{props.month[0]}</span>
+        <Month>{props.month[0]}</Month>
       </CheckIn>
       <CheckOut>
-        <span>{props.month[1]}</span>
+        <Month>{props.month[1]}</Month>
         <span>
           {nextButton}
         </span>

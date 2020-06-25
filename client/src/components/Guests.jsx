@@ -5,10 +5,11 @@ import SingleGuest from './SingleGuest.jsx';
 const Dropdown = styled.div`
   display: block;
   position: absolute;
-  width: 80%;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 16px;
+  width: 350px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 16px;
+  border: .5px solid #dddddd;
   background: white;
-  border-radius: 3px;
+  border-radius: 4px;
   padding: 15px;
   margin: 10px;
   cursor: default;

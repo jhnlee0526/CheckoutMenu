@@ -13,18 +13,43 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+const TotalWrapper = styled.div`
+  border-radius: 10px;
+  border: none;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
+  width: 350px;
+  height: 400px;
+  padding: 15px;
+`;
+
+// dimensions I want if no there aren't dates selected/no pricing data:
+const Wrapper = styled.div`
+  border-radius: 10px;
+  border: none;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
+  width: 350px;
+  height: 215px;
+  padding: 15px;
+`;
+
 const Button = styled.button`
+  // on hover, change to: ??
   background-color: #ff385c;
   color: white;
   text-align: center;
   font: "Helvetica Neue", sans-serif;
   border-radius: 5px;
   border: none;
-  padding: 8.5px 30px;
-  font-size: 70%;
-  margin: 5px;
-  width: 100%;
+  padding: 12px 30px;
+  // font-size: 70%;
+  letter-spacing: .5px;
+  margin: 15px 5px;
+  width: 340px;
   cursor: pointer;
+  // possibility if we do gradient?
+  // background: linear-gradient(#E61E4D 0%, #E31C5F 50%, #D70466 100%)
 `;
 
 const Footer = styled.div`
@@ -96,7 +121,7 @@ class App extends React.Component {
     }
 
     return (
-      <div>
+      <TotalWrapper>
         <GlobalStyles />
         <div>
           {loadingPage}
@@ -113,7 +138,7 @@ class App extends React.Component {
         </div>
         <Button>{button}</Button>
         <Footer>{msg}</Footer>
-      </div>
+      </TotalWrapper>
     );
   }
 }

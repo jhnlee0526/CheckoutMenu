@@ -12,8 +12,8 @@ const Container = styled.div`
 `;
 
 const Line = styled.div`
-  width: 100%;
-  margin: 15px 5px 5px 5px;
+  width: 350px;
+  // margin: 15px 5px 5px 5px;
   border-bottom: 1px solid #717171;
   overflow: hidden;
 `;

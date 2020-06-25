@@ -11,14 +11,6 @@ describe('<App /> rendering', () => {
   });
 });
 
-describe('<CalendarModal /> rendering', () => {
-  it('should call componentDidMount', () => {
-    const spy = jest.spyOn(CalendarModal.prototype, 'componentDidMount');
-    mount(<CalendarModal />);
-    expect(CalendarModal.prototype.componentDidMount).toHaveBeenCalledTimes(1);
-  });
-});
-
 // describe('<PropertyData /> test', () => {
   // it('renders a star image', () => {
   //   const wrapper = shallow(<PropertyData />);
