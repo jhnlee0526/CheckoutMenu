@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -20,6 +19,8 @@ const CheckOut = styled.span`
 
 const Month = styled.span`
   justify-content: center;
+  font-size: 12px;
+  margin: 10px;
 `;
 
 const NextArrow = styled.button`
@@ -51,6 +52,7 @@ const PreviousArrow = styled.button`
     background-color: #f7f7f7;
   }
 `;
+
 
 const CalendarMonth = (props) => {
   let previousButton;

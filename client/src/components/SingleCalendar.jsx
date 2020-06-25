@@ -15,6 +15,12 @@ const BetweenWeekdays = styled.span`
   margin: 15px;
 `;
 
+const EachDay = styled.tr`
+  // padding: 5px;
+  // margin: 5px;
+  font-size: 10px;
+`;
+
 const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12};
 
 class SingleCalendar extends React.Component {
@@ -138,7 +144,7 @@ class SingleCalendar extends React.Component {
           rows.push(cells);
         }
       });
-      calendarMonth.push(rows.map((d, i) => (<tr key={i}>{d}</tr>)));
+      calendarMonth.push(rows.map((d, i) => (<EachDay key={i}>{d}</EachDay>)));
       monthsAndYear.push(`${eachMonth} ${currentYear}`);
     }
     // console.log('monthsAndYear', monthsAndYear);
