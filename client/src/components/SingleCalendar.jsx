@@ -5,10 +5,14 @@ import CalendarMonth from './CalendarMonth.jsx';
 import CalendarView from './CalendarView.jsx';
 
 const Weekdays = styled.span`
-  padding: 2px;
-  // overflow: hidden;
+  padding: 5px;
   text-align: center;
-  // float: left;
+  font-size: 10px;
+  color: #717171;
+`;
+
+const BetweenWeekdays = styled.span`
+  margin: 15px;
 `;
 
 const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12};
@@ -148,7 +152,7 @@ class SingleCalendar extends React.Component {
         </div>
         <div>
           {weekdays}
-          <span> </span>
+          <BetweenWeekdays> </BetweenWeekdays>
           {weekdays}
         </div>
         <CalendarView calendar={displayedCals} />
