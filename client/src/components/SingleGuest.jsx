@@ -131,17 +131,22 @@ class SingleGuest extends React.Component {
     }
     let currentMinusButton;
     if (currentGuestCount === 0 || (this.props.item === 'Adults' && currentGuestCount === 1)) {
-      currentMinusButton = <TransparentButton onClick={this.handleMinusClick}>-</TransparentButton>;
+      currentMinusButton = <TransparentButton>-</TransparentButton>;
     } else {
       currentMinusButton = <Button onClick={this.handleMinusClick}>-</Button>;
     }
     let currentPlusButton;
-    if (this.props.guests === this.props.guestsAllowed) {
-      currentPlusButton = <TransparentButton onClick={this.handlePlusClick}>+</TransparentButton>;
+    if (this.props.item === 'Infants') {
+      if (this.state.infants === 5) {
+        currentPlusButton = <TransparentButton>+</TransparentButton>;
+      } else {
+        currentPlusButton = <Button onClick={this.handlePlusClick}>+</Button>;
+      }
+    } else if (this.props.guests === this.props.guestsAllowed) {
+      currentPlusButton = <TransparentButton>+</TransparentButton>;
     } else {
       currentPlusButton = <Button onClick={this.handlePlusClick}>+</Button>;
     }
-    
 
     return (
       <EachGuest>
