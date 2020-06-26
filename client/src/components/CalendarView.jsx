@@ -29,7 +29,7 @@ const CalendarView = (props) => (
   <CheckIn>
     <StyledTable>
       <tbody>
-        {console.log(props.calendar[0])}
+        {/* {console.log(props.calendar[0])} */}
         {props.calendar[0]}
       </tbody>
     </StyledTable>

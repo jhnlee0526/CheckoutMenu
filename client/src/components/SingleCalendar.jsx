@@ -32,6 +32,7 @@ class SingleCalendar extends React.Component {
       end: 2,
       previous: false,
       next: true,
+      // value: '',
     };
     this.currentDay = this.currentDay.bind(this);
     this.getDaysInMonth = this.getDaysInMonth.bind(this);
@@ -98,8 +99,11 @@ class SingleCalendar extends React.Component {
   }
 
   handleDayClick(e) {
-    // console.log(this);
-    console.log('wow!');
+    if (!this.props.checkIn) {
+      this.props.handleCheckIn(`${e.target.id} ${e.target.innerHTML}`);
+    } else {
+      this.props.handleCheckOut(`${e.target.id} ${e.target.innerHTML}`);
+    }
   }
 
   render() {
@@ -129,7 +133,7 @@ class SingleCalendar extends React.Component {
       for (let d = 1; d <= this.getDaysInMonth(eachMonth, currentYear); d++) {
         let current = d == this.currentDay() ? "today" : "";
         allDaysInMonth.push(
-          <td key={`day${d}`} className={`calendar-day ${current}`}>{d}</td>,
+          <td key={`day${d}`} className={`calendar-day ${current}`} id={`${eachMonth}`} >{d}</td>,
         );
       }
 
@@ -151,7 +155,6 @@ class SingleCalendar extends React.Component {
       calendarMonth.push(rows.map((d, i) => (<EachDay onClick={this.handleDayClick} key={i}>{d}</EachDay>)));
       monthsAndYear.push(`${eachMonth} ${currentYear}`);
     }
-    // console.log('monthsAndYear', monthsAndYear);
     //once next is clicked, change to 1, 3. 
     let displayedCals = calendarMonth.slice(this.state.start, this.state.end);
     let displayedMonths = monthsAndYear.slice(this.state.start, this.state.end);

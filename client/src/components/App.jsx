@@ -69,11 +69,12 @@ class App extends React.Component {
     this.state = {
       loading: true,
       propertyData: {},
-      calendar: true,
+      calendar: false,
       nights: 0,
       dropDown: 0,
       calculationsData: [{}, {}, {}],
     };
+    this.handleNights = this.handleNights.bind(this);
   }
 
   componentDidMount() {
@@ -86,9 +87,9 @@ class App extends React.Component {
           calculationsData: [
             {cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5},
             // edit this depending on the amount of nights -- avg it to be 12%;
-            {serviceFee: Math.floor(data.nightly_rate * 3 * .12)},
+            {serviceFee: Math.floor(data.nightly_rate * this.state.nights * .12)},
             // edit this depending on the amount of nights -- avg it to be 11%
-            {occupancyFee: Math.floor(data.nightly_rate * 3 * .11)},
+            {occupancyFee: Math.floor(data.nightly_rate * this.state.nights * .11)},
           ],
         });
         this.setState({
@@ -99,6 +100,14 @@ class App extends React.Component {
       .catch((err) => {
         console.log('react get request error: ', err);
       });
+  }
+
+  handleNights(nights) {
+    this.setState({
+      nights: nights,
+      calendar: true,
+    });
+    this.componentDidMount();
   }
 
   render() {
@@ -121,8 +130,8 @@ class App extends React.Component {
       msg = '';
     } else {
       // base price will change based on the amount of nights
-      const basePrice = this.state.propertyData.nightly_rate * 3;
-      dates = <Calculations rate={this.state.propertyData.nightly_rate} calculationsData={this.state.calculationsData} basePrice={basePrice} />;
+      const basePrice = this.state.propertyData.nightly_rate * this.state.nights;
+      dates = <Calculations rate={this.state.propertyData.nightly_rate} calculationsData={this.state.calculationsData} basePrice={basePrice} nights={this.state.nights} />;
     }
 
     return (
@@ -132,6 +141,7 @@ class App extends React.Component {
         <DatesGuestsView
           nights={this.state.nights}
           guestsAllowed={this.state.propertyData.total_guests_allowed}
+          handleNights={this.handleNights}
         />
         {dates}
         <Button>{button}</Button>

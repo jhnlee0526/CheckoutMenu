@@ -38,31 +38,35 @@ class DatesView extends React.Component {
     this.showModal = this.showModal.bind(this);
   }
 
-  handleClick(e) {
-    e.preventDefault();
+  handleClick() {
     this.setState({
       show: true,
     });
   }
 
-  showModal(e) {
-    e.preventDefault();
+  showModal() {
     this.setState({
       show: false,
     });
   }
 
   render() {
+    let modalCheckIn = 'Add date';
+    let modalCheckOut = 'Add date';
+    if (this.props.checkOut) {
+      modalCheckIn = this.props.checkIn;
+      modalCheckOut = this.props.checkOut;
+    }
     return (
       <div>
         <div onClick={this.handleClick}>
           <CheckInDate>
             <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
-            <div>Add date</div>
+            <div>{modalCheckIn}</div>
           </CheckInDate>
           <CheckOutDate>
             <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
-            <div>Add date</div>
+            <div>{modalCheckOut}</div>
           </CheckOutDate>
         </div>
         <div>
@@ -72,6 +76,9 @@ class DatesView extends React.Component {
             nights={this.props.nights}
             checkIn={this.props.checkIn}
             checkOut={this.props.checkOut}
+            checkInDate={this.props.checkInDate}
+            checkOutDate={this.props.checkOutDate}
+            handleNights={this.props.handleNights}
           />
         </div>
       </div>

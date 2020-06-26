@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import SingleCalendar from './SingleCalendar.jsx';
 
 const Modal = styled.div`
@@ -61,6 +62,18 @@ const CheckOutDate = styled.div`
   float: right;
   width: 65px;
   height: 20px;
+`;
+
+const SelectDiv = styled.div`
+  margin-bottom: 3px;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+const NightDiv = styled.div`
+  margin-top: 3px;
+  font-size: 10px;
+  color: #717171
 `;
 
 const Keyboard = styled.button`
@@ -126,18 +139,50 @@ class CalendarModal extends React.Component {
     super(props);
     this.state = {
       months: [],
+      checkInDate: '',
+      checkOutDate: '',
+      nights: 0,
     };
     this.getNextMonths = this.getNextMonths.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleCheckInDate = this.handleCheckInDate.bind(this);
+    this.handleCheckOutDate = this.handleCheckOutDate.bind(this);
+    this.getNumberOfNights = this.getNumberOfNights.bind(this);
   }
 
   componentDidMount() {
     this.getNextMonths();
   }
 
-  handleClose(e) {
-    e.preventDefault();
-    this.props.onClick(e);
+  handleClose() {
+    this.props.onClick();
+  }
+
+  handleCheckInDate(date) {
+    this.setState({
+      checkInDate: date,
+    });
+    this.props.checkInDate(date);
+  }
+
+  handleCheckOutDate(date) {
+    this.setState({
+      checkOutDate: date,
+    });
+    this.props.checkOutDate(date);
+    this.getNumberOfNights(date);
+    this.handleClose();
+  }
+
+  getNumberOfNights(checkOutDate) {
+    console.log(this.state.checkOutDate);
+    let endDate = moment(checkOutDate);
+    let startDate = moment(this.state.checkInDate);
+    let nights = endDate.diff(startDate, 'days');
+    this.setState({
+      nights: nights,
+    });
+    this.props.handleNights(nights);
   }
 
   getNextMonths() {
@@ -168,21 +213,36 @@ class CalendarModal extends React.Component {
     if (!this.props.show) {
       return null;
     }
+    let currentCheckIn = 'Add date';
+    if (this.state.checkInDate) {
+      currentCheckIn = this.state.checkInDate;
+    }
+    let currentCheckOut = 'Add date';
+    let selectDates = 'Select Dates';
+    let currentNights = 'Add your travel dates for exact pricing';
+    if (this.state.checkOutDate) {
+      currentCheckOut = this.state.checkOutDate;
+      selectDates = `${this.state.nights} night(s)`;
+      currentNights = `${this.state.checkInDate} - ${this.state.checkOutDate}`;
+    }
     return (
       <div>
         <Modal>
           <Container>
             {/* this will need to be changed to the amount of nights and the dates later... */}
-            <SelectContainer>Select dates</SelectContainer>
+            <SelectContainer>
+              <SelectDiv>{selectDates}</SelectDiv>
+              <NightDiv>{currentNights}</NightDiv>
+            </SelectContainer>
             <CheckContainer>
               <div>
               <CheckInDate>
                 <div>CHECK-IN</div>
-                <div>Add date</div>
+                <div>{currentCheckIn}</div>
               </CheckInDate>
               <CheckOutDate>
                 <div>CHECKOUT</div>
-                <div>Add date</div>
+                <div>{currentCheckOut}</div>
               </CheckOutDate>
               </div>
             </CheckContainer>
@@ -193,6 +253,8 @@ class CalendarModal extends React.Component {
               nights={this.props.nights}
               checkIn={this.props.checkIn}
               checkOut={this.props.checkOut}
+              handleCheckIn={this.handleCheckInDate}
+              handleCheckOut={this.handleCheckOutDate}
             />
           </Container>
           <Container>

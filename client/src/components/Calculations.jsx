@@ -39,7 +39,7 @@ const Calculations = (props) => {
     <Container>
       <LineItem>
         {/* edit this to be however many nights it is */}
-        <Left>${props.rate} x {3} nights</Left>
+        <Left>${props.rate} x {props.nights} nights</Left>
         {/* enter the question mark button  */}
         <Right>${props.basePrice}</Right>
       </LineItem>

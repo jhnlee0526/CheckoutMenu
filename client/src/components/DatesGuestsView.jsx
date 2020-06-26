@@ -30,9 +30,24 @@ class DatesGuestsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkIn: 0,
-      checkOut: 0,
+      checkIn: '',
+      checkOut: '',
     };
+    this.handleCheckIn = this.handleCheckIn.bind(this);
+    this.handleCheckOut = this.handleCheckOut.bind(this);
+  }
+
+  handleCheckIn(date) {
+    console.log('checkIn: ', date);
+    this.setState({
+      checkIn: date,
+    });
+  }
+
+  handleCheckOut(date) {
+    this.setState({
+      checkOut: date,
+    });
   }
 
   render() {
@@ -42,6 +57,9 @@ class DatesGuestsView extends React.Component {
           nights={this.props.nights}
           checkIn={this.state.checkIn}
           checkOut={this.state.checkOut}
+          checkInDate={this.handleCheckIn}
+          checkOutDate={this.handleCheckOut}
+          handleNights={this.props.handleNights}
         />
         <Line />
         <Guests>
