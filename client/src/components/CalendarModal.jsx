@@ -14,7 +14,7 @@ const Modal = styled.div`
   padding: 10px;
   cursor: default;
   flex-wrap: wrap;
-  width: 350px
+  width: 400px;
   height: 400px;
 `;
 
@@ -23,6 +23,47 @@ const Container = styled.div`
   justify-content: center;
   display: flex;
   align-items: baseline;
+`;
+
+const SelectContainer = styled.span`
+  float: left;
+  margin-right: 20px;
+  // justify-content: flex-start;
+  // align-items: top;
+`;
+
+const CheckContainer = styled.span`
+  float: right;
+  margin-left: 20px;
+  border: .5px solid #717171;
+  border-radius: 8px;
+  font-size: 8px;
+`;
+
+//on click, or when it is that component, it will have the border be black
+const CheckInDate = styled.div`
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 8px;
+  display: inline-block;
+  text-align: left;
+  float: left;
+  // font-size: 10px;
+  width: 65px;
+  height: 20px;
+`;
+
+//on click, or when it is that component, it will have the border be black
+const CheckOutDate = styled.div`
+  border-radius: 5px;
+  // border: 1px solid black;
+  padding: 8px;
+  display: inline-block;
+  text-align: left;
+  // font-size: 10px;
+  float: right;
+  width: 65px;
+  height: 20px;
 `;
 
 const Keyboard = styled.button`
@@ -124,13 +165,26 @@ class CalendarModal extends React.Component {
     return (
       <div>
         <Modal>
-          <div>
+          <Container>
             {/* add select dates and the checkin/checkout box here */}
-          </div>
+            <SelectContainer>Select dates</SelectContainer>
+            <CheckContainer>
+              <div>
+              <CheckInDate>
+                <div>CHECK-IN</div>
+                <div>Add date</div>
+              </CheckInDate>
+              <CheckOutDate>
+                <div>CHECKOUT</div>
+                <div>Add date</div>
+              </CheckOutDate>
+              </div>
+            </CheckContainer>
+          </Container>
           <div>
             <SingleCalendar months={this.state.months} />
           </div>
-          <div>
+          {/* <div> */}
             <Container>
               <span>
                 <Keyboard>Keeb</Keyboard>
@@ -142,7 +196,7 @@ class CalendarModal extends React.Component {
                 <Close onClick={this.handleClose}>Close</Close>
               </span>
             </Container>
-          </div>
+          {/* </div> */}
         </Modal>
       </div>
     );

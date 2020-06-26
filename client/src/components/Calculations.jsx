@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import CalculationItem from './CalculationItem.jsx';
 
 const Container = styled.div`
-  margin: 10px 0;
+  margin: 15px 0;
+  font-size: 10px;
 `;
 
 const LineItem = styled.div`
-  font: "Helvetica Neue", sans-serif;
   margin: 15px 5px 0 5px;
   overflow: hidden;
 `;
@@ -26,9 +26,9 @@ const Total = styled.div`
 `;
 
 const Line = styled.div`
-  width: 100%;
-  margin: 15px 5px 20px 5px;
-  border-bottom: 1px solid #717171;
+  width: 205px;
+  margin: 15px 5px;
+  border-bottom: .5px solid #dddddd;
 `;
 
 const Calculations = (props) => {

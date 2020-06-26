@@ -4,18 +4,27 @@ import Guests from './Guests.jsx';
 
 const Container = styled.div`
   cursor: pointer;
-  overflow: hidden;
-  // position: relative;
-  // display: inline-block;
+  padding: 3px 5px;
+  width: 200px;
+  height: 27px;
 `;
 
 const Guest = styled.span`
   float: left;
+  padding: 3px;
+`;
+
+const GuestSizing = styled.div`
+  font-size: 7px;
+`;
+
+const AllGuestsSizing = styled.div`
+  font-size: 10px;
 `;
 
 const DownArrow = styled.img`
   float: right; 
-  width: 20px;
+  width: 15px;
   height: auto;
   cursor: pointer;
   margin: 5px;
@@ -23,7 +32,7 @@ const DownArrow = styled.img`
 
 const UpArrow = styled.img`
   float: right; 
-  width: 20px;
+  width: 15px;
   height: auto;
   cursor: pointer;
   margin: 5px;
@@ -124,17 +133,17 @@ class Dropdown extends React.Component {
       <div>
         <Container onClick={this.handleClick}>
           <Guest>
-            <div>
+            <GuestSizing>
               GUESTS
-            </div>
-            <div>
+            </GuestSizing>
+            <AllGuestsSizing>
               <span>
                 {this.state.guests} {guests}
               </span>
               <span>
                 {totalInfants}
               </span>
-            </div>
+            </AllGuestsSizing>
           </Guest>
           <span>
             {arrowDirection}

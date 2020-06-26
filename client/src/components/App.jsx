@@ -9,7 +9,7 @@ import DatesGuestsView from './DatesGuestsView.jsx';
 
 const GlobalStyles = createGlobalStyle`
   body {
-    font-family: Roboto, sans-serif;
+    font-family: Montserrat, sans-serif;
   }
 `;
 
@@ -18,9 +18,13 @@ const TotalWrapper = styled.div`
   border: none;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
-  width: 350px;
-  height: 400px;
-  padding: 15px;
+  width: 215px;
+  height: 315px;
+  padding: 10px;
+  font-size: 12px;
+  // display: flex;
+  // justify-content: center;
+  margin: auto;
 `;
 
 // dimensions I want if no there aren't dates selected/no pricing data:
@@ -29,33 +33,34 @@ const Wrapper = styled.div`
   border: none;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
-  width: 350px;
-  height: 215px;
+  width: 215px;
+  height: 260px;
   padding: 15px;
+  font-size: 12px;
 `;
 
 const Button = styled.button`
   // on hover, change to: ??
-  background-color: #ff385c;
+  // background-color: #ff385c;
   color: white;
+  justify-content: center;
   text-align: center;
-  font: "Helvetica Neue", sans-serif;
   border-radius: 5px;
   border: none;
-  padding: 12px 30px;
-  // font-size: 70%;
+  font-size: 10px;
   letter-spacing: .5px;
-  margin: 15px 5px;
-  width: 340px;
+  margin: 15px 5px 10px 5px;
+  width: 205px;
+  height: 35px;
   cursor: pointer;
-  // possibility if we do gradient?
-  // background: linear-gradient(#E61E4D 0%, #E31C5F 50%, #D70466 100%)
+  background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%)
 `;
 
 const Footer = styled.div`
-  font: "Helvetica Neue", sans-serif;
   text-align: center;
-  font-size: 10px;
+  font-size: 8px;
+  letter-spacing: .2px;
+  color: #222222;
 `;
 
 class App extends React.Component {
@@ -64,7 +69,7 @@ class App extends React.Component {
     this.state = {
       loading: true,
       propertyData: {},
-      calendar: false,
+      calendar: true,
       nights: 0,
       dropDown: 0,
       calculationsData: [{}, {}, {}],
@@ -123,19 +128,12 @@ class App extends React.Component {
     return (
       <TotalWrapper>
         <GlobalStyles />
-        <div>
-          {loadingPage}
-        </div>
-        <div>
-          {/* checkin/checkout/guets component go here */}
-          <DatesGuestsView
-            nights={this.state.nights}
-            guestsAllowed={this.state.propertyData.total_guests_allowed}
-          />
-        </div>
-        <div>
-          {dates}
-        </div>
+        {loadingPage}
+        <DatesGuestsView
+          nights={this.state.nights}
+          guestsAllowed={this.state.propertyData.total_guests_allowed}
+        />
+        {dates}
         <Button>{button}</Button>
         <Footer>{msg}</Footer>
       </TotalWrapper>

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  font: "Helvetica Neue", sans-serif;
-  margin: 5px;
+  margin: 10px 0;
+  padding: 0 3px 0 5px;
   text-align: center;
   overflow: hidden;
 `;
@@ -14,12 +14,12 @@ const Left = styled.div`
 
 const Right = styled.div`
   float: right;
-  font-size: 75%;
   cursor: pointer;
 `;
 
 const Rate = styled.span`
   font-weight: bold;
+  font-size: 14px;
 `;
 
 const Star = styled.img`
@@ -29,21 +29,29 @@ const Star = styled.img`
   cursor: text;
 `;
 
+const Info = styled.span`
+  font-size: 9px;
+  color: #717171
+`;
+
+const PerNight = styled.span`
+  font-size: 11px;
+`;
 
 const PropertyData = (props) => (
   <Container>
     <Left>
       <Rate>${props.data.nightly_rate}</Rate>
       <span> </span>
-      <span>/ night</span>
+      <PerNight>/ night</PerNight>
     </Left>
     <Right>
       <span>
         <Star src="https://airbnbavatars.s3-us-west-1.amazonaws.com/icons/star-8-24.png" />
       </span>
-      <span>{props.data.rating}</span>
+      <Info>{props.data.rating}</Info>
       <span> </span>
-      <span>({props.data.reviews})</span>
+      <Info>({props.data.reviews})</Info>
     </Right>
   </Container>
 );

@@ -2,34 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import Modal from './CalendarModal.jsx';
 
-
 const CheckInDate = styled.div`
-  border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
   display: inline-block;
   text-align: left;
   float: left;
-  width: 135px;
-  margin: 5px;
+  width: 88px;
+  font-size: 10px;
+  border-right: .5px solid #717171;
 `;
 
 //on hover, it will be black
-
-const Vertical = styled.div`
-  border-left: 1px solid #717171;
-  height: 68px;
-  position: absolute;
-  left: 190px;
-`;
-
 const CheckOutDate = styled.div`
-  border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
   display: inline-block;
   text-align: left;
   float: right;
-  width: 135px;
-  margin: 5px;
+  width: 88px;
+  // margin: 5px;
+  font-size: 10px;
+`;
+
+const CheckInCheckOut = styled.div`
+  font-size: 7px;
 `;
 
 class DatesView extends React.Component {
@@ -61,12 +56,11 @@ class DatesView extends React.Component {
       <div>
         <div onClick={this.handleClick}>
           <CheckInDate>
-            <div>CHECK-IN</div>
+            <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
             <div>Add date</div>
           </CheckInDate>
-          <Vertical />
           <CheckOutDate>
-            <div>CHECKOUT</div>
+            <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
             <div>Add date</div>
           </CheckOutDate>
         </div>
