@@ -8,22 +8,20 @@ const Container = styled.div`
 const CheckIn = styled.span`
   text-align: center;
   float: left;
-  // margin: 5px;
 `;
 
 const CheckOut = styled.span`
   text-align: center;
   float: right;
-  // margin: 5px;
 `;
 
 const BetweenCalendars = styled.span`
-  margin: 10px;
+  margin: 5px;
 `;
 
 const StyledTable = styled.table`
   border-collapse: separate;
-  border-spacing: 9px;
+  border-spacing: 13px;
 `;
 
 const CalendarView = (props) => (
@@ -31,6 +29,7 @@ const CalendarView = (props) => (
   <CheckIn>
     <StyledTable>
       <tbody>
+        {console.log(props.calendar[0])}
         {props.calendar[0]}
       </tbody>
     </StyledTable>
@@ -44,6 +43,6 @@ const CalendarView = (props) => (
     </StyledTable>
   </CheckOut>
 </Container>
-)
+);
 
 export default CalendarView;

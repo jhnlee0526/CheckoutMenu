@@ -1,35 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
 import SingleCalendar from './SingleCalendar.jsx';
 
 const Modal = styled.div`
   border-radius: 12px;
   background: white;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center; 
   box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px;
-  position: fixed;
-  padding: 10px;
+  padding: 10px 15px;
   cursor: default;
   flex-wrap: wrap;
-  width: 400px;
-  height: 400px;
+  width: 425px;
+  max-width: 100%;
+  height: 310px;
+  max-height: 100%;
+  right: 35%;
 `;
 
 const Container = styled.div`
-  // overflow: hidden;
-  justify-content: center;
-  display: flex;
-  align-items: baseline;
+  display: block;
+  width: 425px;
+  padding: 5px;
 `;
 
 const SelectContainer = styled.span`
   float: left;
   margin-right: 20px;
-  // justify-content: flex-start;
-  // align-items: top;
 `;
 
 const CheckContainer = styled.span`
@@ -48,7 +47,6 @@ const CheckInDate = styled.div`
   display: inline-block;
   text-align: left;
   float: left;
-  // font-size: 10px;
   width: 65px;
   height: 20px;
 `;
@@ -60,7 +58,6 @@ const CheckOutDate = styled.div`
   padding: 8px;
   display: inline-block;
   text-align: left;
-  // font-size: 10px;
   float: right;
   width: 65px;
   height: 20px;
@@ -69,11 +66,11 @@ const CheckOutDate = styled.div`
 const Keyboard = styled.button`
   display: flex;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   text-align: center;
-  // align-items: baseline;
-  justify-content: flex-start;
+  padding: 5px;
+  float: left;
   border: none;
   background: none;
   :hover {
@@ -83,27 +80,22 @@ const Keyboard = styled.button`
 `;
 
 const Clear = styled.button`
-  display: flex;
-  border-radius: 5px;
-  text-align: center;
-  // align-items: baseline;
-  justify-content: flex-end;
+  border-radius: 4px;
+  padding: 5px 10px;
   border: none;
+  margin: 5px;
+  font-size: 10px;
   background: none;
   text-decoration: underline;
   :hover {
     background-color: #f7f7f7;
     cursor: pointer;
   }
-
 `;
 
 const Close = styled.button`
-  display: flex;
   border-radius: 4px;
-  text-align: center;
-  justify-content: flex-start;
-  // align-items: baseline;
+  font-size: 10px;
   border: none;
   padding: 5px 10px;
   background: #222222;
@@ -112,7 +104,21 @@ const Close = styled.button`
     background-color: #000000;
     cursor: pointer;
   }
+`;
 
+const Keeb = styled.img`
+  width: 15px;
+  height: auto;
+  padding: 3px;
+`;
+
+const KeebSpan = styled.span`
+  float: left;
+  // justify-content: 
+`;
+
+const ClearClose = styled.span`
+  float: right;
 `;
 
 class CalendarModal extends React.Component {
@@ -166,7 +172,7 @@ class CalendarModal extends React.Component {
       <div>
         <Modal>
           <Container>
-            {/* add select dates and the checkin/checkout box here */}
+            {/* this will need to be changed to the amount of nights and the dates later... */}
             <SelectContainer>Select dates</SelectContainer>
             <CheckContainer>
               <div>
@@ -181,22 +187,25 @@ class CalendarModal extends React.Component {
               </div>
             </CheckContainer>
           </Container>
-          <div>
-            <SingleCalendar months={this.state.months} />
-          </div>
-          {/* <div> */}
-            <Container>
-              <span>
-                <Keyboard>Keeb</Keyboard>
-              </span>
-              <span>
-                <Clear>Clear Dates</Clear>
-              </span>
-              <span>
-                <Close onClick={this.handleClose}>Close</Close>
-              </span>
-            </Container>
-          {/* </div> */}
+          <Container>
+            <SingleCalendar
+              months={this.state.months}
+              nights={this.props.nights}
+              checkIn={this.props.checkIn}
+              checkOut={this.props.checkOut}
+            />
+          </Container>
+          <Container>
+            <KeebSpan>
+              <Keyboard><Keeb src="https://img.icons8.com/small/32/000000/keyboard.png" /></Keyboard>
+            </KeebSpan>
+            <ClearClose>
+              <Close onClick={this.handleClose}>Close</Close>
+            </ClearClose>
+            <ClearClose>
+              <Clear>Clear Dates</Clear>
+            </ClearClose>
+          </Container>
         </Modal>
       </div>
     );

@@ -28,16 +28,16 @@ const TotalWrapper = styled.div`
 `;
 
 // dimensions I want if no there aren't dates selected/no pricing data:
-const Wrapper = styled.div`
-  border-radius: 10px;
-  border: none;
-  background: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
-  width: 215px;
-  height: 260px;
-  padding: 15px;
-  font-size: 12px;
-`;
+// const Wrapper = styled.div`
+//   border-radius: 10px;
+//   border: none;
+//   background: white;
+//   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
+//   width: 215px;
+//   height: 260px;
+//   padding: 15px;
+//   font-size: 12px;
+// `;
 
 const Button = styled.button`
   // on hover, change to: ??

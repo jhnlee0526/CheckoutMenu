@@ -5,19 +5,17 @@ import CalendarMonth from './CalendarMonth.jsx';
 import CalendarView from './CalendarView.jsx';
 
 const Weekdays = styled.span`
-  padding: 5px;
+  padding: 7px;
   text-align: center;
   font-size: 10px;
   color: #717171;
 `;
 
 const BetweenWeekdays = styled.span`
-  margin: 15px;
+  margin: 13px;
 `;
 
 const EachDay = styled.tr`
-  // padding: 5px;
-  // margin: 5px;
   font-size: 10px;
 `;
 
@@ -40,6 +38,7 @@ class SingleCalendar extends React.Component {
     this.getFirstDay = this.getFirstDay.bind(this);
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
+    this.handleDayClick = this.handleDayClick.bind(this);
   }
 
   componentDidMount() {
@@ -74,7 +73,7 @@ class SingleCalendar extends React.Component {
         previous: true,
       });
     }
-    if (this.state.end === 12) {
+    if (this.state.end === 11) {
       this.setState({
         next: false,
       });
@@ -96,6 +95,11 @@ class SingleCalendar extends React.Component {
         previous: false,
       });
     }
+  }
+
+  handleDayClick(e) {
+    // console.log(this);
+    console.log('wow!');
   }
 
   render() {
@@ -144,7 +148,7 @@ class SingleCalendar extends React.Component {
           rows.push(cells);
         }
       });
-      calendarMonth.push(rows.map((d, i) => (<EachDay key={i}>{d}</EachDay>)));
+      calendarMonth.push(rows.map((d, i) => (<EachDay onClick={this.handleDayClick} key={i}>{d}</EachDay>)));
       monthsAndYear.push(`${eachMonth} ${currentYear}`);
     }
     // console.log('monthsAndYear', monthsAndYear);

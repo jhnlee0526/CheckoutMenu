@@ -30,6 +30,7 @@ const CheckInCheckOut = styled.div`
 class DatesView extends React.Component {
   constructor(props) {
     super(props);
+    // props are checkIn, checkOut, and nights
     this.state = {
       show: false,
     };
@@ -65,7 +66,13 @@ class DatesView extends React.Component {
           </CheckOutDate>
         </div>
         <div>
-          <Modal onClick={this.showModal} show={this.state.show} />
+          <Modal
+            onClick={this.showModal}
+            show={this.state.show}
+            nights={this.props.nights}
+            checkIn={this.props.checkIn}
+            checkOut={this.props.checkOut}
+          />
         </div>
       </div>
     );
