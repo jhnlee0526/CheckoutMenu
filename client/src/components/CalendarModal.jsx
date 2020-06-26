@@ -6,33 +6,84 @@ import SingleCalendar from './SingleCalendar.jsx';
 const Modal = styled.div`
   border-radius: 12px;
   background: white;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center; 
   box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px;
-  position: fixed;
-  padding: 10px;
+  padding: 10px 15px;
   cursor: default;
   flex-wrap: wrap;
-  width: 350px
-  height: 400px;
+  width: 425px;
+  max-width: 100%;
+  height: 310px;
+  max-height: 100%;
+  right: 35%;
 `;
 
 const Container = styled.div`
-  // overflow: hidden;
-  justify-content: center;
-  display: flex;
-  align-items: baseline;
+  display: block;
+  width: 425px;
+  padding: 5px;
+`;
+
+const SelectContainer = styled.span`
+  float: left;
+  margin-right: 20px;
+`;
+
+const CheckContainer = styled.span`
+  float: right;
+  margin-left: 20px;
+  border: .5px solid #717171;
+  border-radius: 8px;
+  font-size: 8px;
+`;
+
+//on click, or when it is that component, it will have the border be black
+const CheckInDate = styled.div`
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 8px;
+  display: inline-block;
+  text-align: left;
+  float: left;
+  width: 65px;
+  height: 20px;
+`;
+
+//on click, or when it is that component, it will have the border be black
+const CheckOutDate = styled.div`
+  border-radius: 5px;
+  // border: 1px solid black;
+  padding: 8px;
+  display: inline-block;
+  text-align: left;
+  float: right;
+  width: 65px;
+  height: 20px;
+`;
+
+const SelectDiv = styled.div`
+  margin-bottom: 3px;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+const NightDiv = styled.div`
+  margin-top: 3px;
+  font-size: 10px;
+  color: #717171
 `;
 
 const Keyboard = styled.button`
   display: flex;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   text-align: center;
-  // align-items: baseline;
-  justify-content: flex-start;
+  padding: 5px;
+  float: left;
   border: none;
   background: none;
   :hover {
@@ -42,27 +93,22 @@ const Keyboard = styled.button`
 `;
 
 const Clear = styled.button`
-  display: flex;
-  border-radius: 5px;
-  text-align: center;
-  // align-items: baseline;
-  justify-content: flex-end;
+  border-radius: 4px;
+  padding: 5px 10px;
   border: none;
+  margin: 5px;
+  font-size: 10px;
   background: none;
   text-decoration: underline;
   :hover {
     background-color: #f7f7f7;
     cursor: pointer;
   }
-
 `;
 
 const Close = styled.button`
-  display: flex;
   border-radius: 4px;
-  text-align: center;
-  justify-content: flex-start;
-  // align-items: baseline;
+  font-size: 10px;
   border: none;
   padding: 5px 10px;
   background: #222222;
@@ -71,7 +117,21 @@ const Close = styled.button`
     background-color: #000000;
     cursor: pointer;
   }
+`;
 
+const Keeb = styled.img`
+  width: 15px;
+  height: auto;
+  padding: 3px;
+`;
+
+const KeebSpan = styled.span`
+  float: left;
+  // justify-content: 
+`;
+
+const ClearClose = styled.span`
+  float: right;
 `;
 
 class CalendarModal extends React.Component {
@@ -79,18 +139,50 @@ class CalendarModal extends React.Component {
     super(props);
     this.state = {
       months: [],
+      checkInDate: '',
+      checkOutDate: '',
+      nights: 0,
     };
     this.getNextMonths = this.getNextMonths.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleCheckInDate = this.handleCheckInDate.bind(this);
+    this.handleCheckOutDate = this.handleCheckOutDate.bind(this);
+    this.getNumberOfNights = this.getNumberOfNights.bind(this);
   }
 
   componentDidMount() {
     this.getNextMonths();
   }
 
-  handleClose(e) {
-    e.preventDefault();
-    this.props.onClick(e);
+  handleClose() {
+    this.props.onClick();
+  }
+
+  handleCheckInDate(date) {
+    this.setState({
+      checkInDate: date,
+    });
+    this.props.checkInDate(date);
+  }
+
+  handleCheckOutDate(date) {
+    this.setState({
+      checkOutDate: date,
+    });
+    this.props.checkOutDate(date);
+    this.getNumberOfNights(date);
+    this.handleClose();
+  }
+
+  getNumberOfNights(checkOutDate) {
+    console.log(this.state.checkOutDate);
+    let endDate = moment(checkOutDate);
+    let startDate = moment(this.state.checkInDate);
+    let nights = endDate.diff(startDate, 'days');
+    this.setState({
+      nights: nights,
+    });
+    this.props.handleNights(nights);
   }
 
   getNextMonths() {
@@ -121,28 +213,61 @@ class CalendarModal extends React.Component {
     if (!this.props.show) {
       return null;
     }
+    let currentCheckIn = 'Add date';
+    if (this.state.checkInDate) {
+      currentCheckIn = this.state.checkInDate;
+    }
+    let currentCheckOut = 'Add date';
+    let selectDates = 'Select Dates';
+    let currentNights = 'Add your travel dates for exact pricing';
+    if (this.state.checkOutDate) {
+      currentCheckOut = this.state.checkOutDate;
+      selectDates = `${this.state.nights} night(s)`;
+      currentNights = `${this.state.checkInDate} - ${this.state.checkOutDate}`;
+    }
     return (
       <div>
         <Modal>
-          <div>
-            {/* add select dates and the checkin/checkout box here */}
-          </div>
-          <div>
-            <SingleCalendar months={this.state.months} />
-          </div>
-          <div>
-            <Container>
-              <span>
-                <Keyboard>Keeb</Keyboard>
-              </span>
-              <span>
-                <Clear>Clear Dates</Clear>
-              </span>
-              <span>
-                <Close onClick={this.handleClose}>Close</Close>
-              </span>
-            </Container>
-          </div>
+          <Container>
+            {/* this will need to be changed to the amount of nights and the dates later... */}
+            <SelectContainer>
+              <SelectDiv>{selectDates}</SelectDiv>
+              <NightDiv>{currentNights}</NightDiv>
+            </SelectContainer>
+            <CheckContainer>
+              <div>
+              <CheckInDate>
+                <div>CHECK-IN</div>
+                <div>{currentCheckIn}</div>
+              </CheckInDate>
+              <CheckOutDate>
+                <div>CHECKOUT</div>
+                <div>{currentCheckOut}</div>
+              </CheckOutDate>
+              </div>
+            </CheckContainer>
+          </Container>
+          <Container>
+            <SingleCalendar
+              months={this.state.months}
+              nights={this.props.nights}
+              checkIn={this.props.checkIn}
+              checkOut={this.props.checkOut}
+              handleCheckIn={this.handleCheckInDate}
+              handleCheckOut={this.handleCheckOutDate}
+            />
+          </Container>
+          <Container>
+            <KeebSpan>
+              <Keyboard><Keeb src="https://img.icons8.com/small/32/000000/keyboard.png" /></Keyboard>
+            </KeebSpan>
+            <ClearClose>
+              <Close onClick={this.handleClose}>Close</Close>
+            </ClearClose>
+            <ClearClose>
+              <Clear>Clear Dates</Clear>
+            </ClearClose>
+          </Container>
         </Modal>
       </div>
     );

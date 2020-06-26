@@ -5,14 +5,18 @@ import CalendarMonth from './CalendarMonth.jsx';
 import CalendarView from './CalendarView.jsx';
 
 const Weekdays = styled.span`
-  padding: 5px;
+  padding: 7px;
   text-align: center;
   font-size: 10px;
   color: #717171;
 `;
 
 const BetweenWeekdays = styled.span`
-  margin: 15px;
+  margin: 13px;
+`;
+
+const EachDay = styled.tr`
+  font-size: 10px;
 `;
 
 const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12};
@@ -28,12 +32,14 @@ class SingleCalendar extends React.Component {
       end: 2,
       previous: false,
       next: true,
+      // value: '',
     };
     this.currentDay = this.currentDay.bind(this);
     this.getDaysInMonth = this.getDaysInMonth.bind(this);
     this.getFirstDay = this.getFirstDay.bind(this);
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
+    this.handleDayClick = this.handleDayClick.bind(this);
   }
 
   componentDidMount() {
@@ -68,7 +74,7 @@ class SingleCalendar extends React.Component {
         previous: true,
       });
     }
-    if (this.state.end === 12) {
+    if (this.state.end === 11) {
       this.setState({
         next: false,
       });
@@ -89,6 +95,14 @@ class SingleCalendar extends React.Component {
       this.setState({
         previous: false,
       });
+    }
+  }
+
+  handleDayClick(e) {
+    if (!this.props.checkIn) {
+      this.props.handleCheckIn(`${e.target.id} ${e.target.innerHTML}`);
+    } else {
+      this.props.handleCheckOut(`${e.target.id} ${e.target.innerHTML}`);
     }
   }
 
@@ -119,7 +133,7 @@ class SingleCalendar extends React.Component {
       for (let d = 1; d <= this.getDaysInMonth(eachMonth, currentYear); d++) {
         let current = d == this.currentDay() ? "today" : "";
         allDaysInMonth.push(
-          <td key={`day${d}`} className={`calendar-day ${current}`}>{d}</td>,
+          <td key={`day${d}`} className={`calendar-day ${current}`} id={`${eachMonth}`} >{d}</td>,
         );
       }
 
@@ -138,10 +152,9 @@ class SingleCalendar extends React.Component {
           rows.push(cells);
         }
       });
-      calendarMonth.push(rows.map((d, i) => (<tr key={i}>{d}</tr>)));
+      calendarMonth.push(rows.map((d, i) => (<EachDay onClick={this.handleDayClick} key={i}>{d}</EachDay>)));
       monthsAndYear.push(`${eachMonth} ${currentYear}`);
     }
-    // console.log('monthsAndYear', monthsAndYear);
     //once next is clicked, change to 1, 3. 
     let displayedCals = calendarMonth.slice(this.state.start, this.state.end);
     let displayedMonths = monthsAndYear.slice(this.state.start, this.state.end);

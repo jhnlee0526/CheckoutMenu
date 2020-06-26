@@ -2,17 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 const LineItem = styled.div`
-  font: "Helvetica Neue", sans-serif;
   overflow: hidden;
   margin: 5px;
+  font-size: 10px;
 `;
 
-const Left = styled.div`
+const Left = styled.span`
   float: left;
+  width: 70%;
 `;
 
-const Right = styled.div`
+const Right = styled.span`
   float: right;
+  align-items: right;
 `;
 
 const CalculationItem = (props) => {

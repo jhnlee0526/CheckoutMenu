@@ -9,7 +9,7 @@ import DatesGuestsView from './DatesGuestsView.jsx';
 
 const GlobalStyles = createGlobalStyle`
   body {
-    font-family: Roboto, sans-serif;
+    font-family: Montserrat, sans-serif;
   }
 `;
 
@@ -18,44 +18,49 @@ const TotalWrapper = styled.div`
   border: none;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
-  width: 350px;
-  height: 400px;
-  padding: 15px;
+  width: 215px;
+  height: 315px;
+  padding: 10px;
+  font-size: 12px;
+  // display: flex;
+  // justify-content: center;
+  margin: auto;
 `;
 
 // dimensions I want if no there aren't dates selected/no pricing data:
-const Wrapper = styled.div`
-  border-radius: 10px;
-  border: none;
-  background: white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
-  width: 350px;
-  height: 215px;
-  padding: 15px;
-`;
+// const Wrapper = styled.div`
+//   border-radius: 10px;
+//   border: none;
+//   background: white;
+//   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
+//   width: 215px;
+//   height: 260px;
+//   padding: 15px;
+//   font-size: 12px;
+// `;
 
 const Button = styled.button`
   // on hover, change to: ??
-  background-color: #ff385c;
+  // background-color: #ff385c;
   color: white;
+  justify-content: center;
   text-align: center;
-  font: "Helvetica Neue", sans-serif;
   border-radius: 5px;
   border: none;
-  padding: 12px 30px;
-  // font-size: 70%;
+  font-size: 10px;
   letter-spacing: .5px;
-  margin: 15px 5px;
-  width: 340px;
+  margin: 15px 5px 10px 5px;
+  width: 205px;
+  height: 35px;
   cursor: pointer;
-  // possibility if we do gradient?
-  // background: linear-gradient(#E61E4D 0%, #E31C5F 50%, #D70466 100%)
+  background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%)
 `;
 
 const Footer = styled.div`
-  font: "Helvetica Neue", sans-serif;
   text-align: center;
-  font-size: 10px;
+  font-size: 8px;
+  letter-spacing: .2px;
+  color: #222222;
 `;
 
 class App extends React.Component {
@@ -69,6 +74,7 @@ class App extends React.Component {
       dropDown: 0,
       calculationsData: [{}, {}, {}],
     };
+    this.handleNights = this.handleNights.bind(this);
   }
 
   componentDidMount() {
@@ -81,9 +87,9 @@ class App extends React.Component {
           calculationsData: [
             {cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5},
             // edit this depending on the amount of nights -- avg it to be 12%;
-            {serviceFee: Math.floor(data.nightly_rate * 3 * .12)},
+            {serviceFee: Math.floor(data.nightly_rate * this.state.nights * .12)},
             // edit this depending on the amount of nights -- avg it to be 11%
-            {occupancyFee: Math.floor(data.nightly_rate * 3 * .11)},
+            {occupancyFee: Math.floor(data.nightly_rate * this.state.nights * .11)},
           ],
         });
         this.setState({
@@ -94,6 +100,14 @@ class App extends React.Component {
       .catch((err) => {
         console.log('react get request error: ', err);
       });
+  }
+
+  handleNights(nights) {
+    this.setState({
+      nights: nights,
+      calendar: true,
+    });
+    this.componentDidMount();
   }
 
   render() {
@@ -116,26 +130,20 @@ class App extends React.Component {
       msg = '';
     } else {
       // base price will change based on the amount of nights
-      const basePrice = this.state.propertyData.nightly_rate * 3;
-      dates = <Calculations rate={this.state.propertyData.nightly_rate} calculationsData={this.state.calculationsData} basePrice={basePrice} />;
+      const basePrice = this.state.propertyData.nightly_rate * this.state.nights;
+      dates = <Calculations rate={this.state.propertyData.nightly_rate} calculationsData={this.state.calculationsData} basePrice={basePrice} nights={this.state.nights} />;
     }
 
     return (
       <TotalWrapper>
         <GlobalStyles />
-        <div>
-          {loadingPage}
-        </div>
-        <div>
-          {/* checkin/checkout/guets component go here */}
-          <DatesGuestsView
-            nights={this.state.nights}
-            guestsAllowed={this.state.propertyData.total_guests_allowed}
-          />
-        </div>
-        <div>
-          {dates}
-        </div>
+        {loadingPage}
+        <DatesGuestsView
+          nights={this.state.nights}
+          guestsAllowed={this.state.propertyData.total_guests_allowed}
+          handleNights={this.handleNights}
+        />
+        {dates}
         <Button>{button}</Button>
         <Footer>{msg}</Footer>
       </TotalWrapper>

@@ -1,25 +1,31 @@
 import React from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
 
 const Container = styled.div`
   overflow: hidden;
+  width: 415px;
 `;
 
 const CheckIn = styled.span`
   text-align: center;
   float: left;
   margin: 5px;
+  width: 180px;
+  height: 20px;
 `;
 
 const CheckOut = styled.span`
   text-align: center;
   float: right;
   margin: 5px;
+  width: 180px;
+  height: 20px;
 `;
 
 const Month = styled.span`
   justify-content: center;
+  font-size: 10px;
+  // margin: 10px;
 `;
 
 const NextArrow = styled.button`
@@ -27,7 +33,8 @@ const NextArrow = styled.button`
   border: none;
   width: 20px;
   height: 20px;
-  text-align: center;
+  float: right;
+  text-align: right;
   background: none;
   :focus {
     outline:0;
@@ -43,6 +50,7 @@ const PreviousArrow = styled.button`
   width: 20px;
   height: 20px;
   text-align: center;
+  float: left;
   background: none;
   :focus {
     outline:0;
@@ -51,6 +59,7 @@ const PreviousArrow = styled.button`
     background-color: #f7f7f7;
   }
 `;
+
 
 const CalendarMonth = (props) => {
   let previousButton;

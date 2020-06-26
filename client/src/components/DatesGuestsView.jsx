@@ -6,24 +6,23 @@ import DatesView from './CheckInCheckOut.jsx';
 const Container = styled.div`
   border-radius: 8px;
   border: .5px solid #717171;
-  margin: 5px;
+  margin: 15px 3px;
   cursor: pointer;
   overflow: hidden;
+  width: 209px;
+  height: 75px;
 `;
 
 const Line = styled.div`
-  width: 350px;
-  // margin: 15px 5px 5px 5px;
-  border-bottom: 1px solid #717171;
+  width: 100%;
+  border-bottom: .5px solid #717171;
   overflow: hidden;
 `;
 
 const Guests = styled.div`
-  padding: 10px;
   display: inline-block;
   text-align: left;
-  width: 95%;
-  margin: 0 5px;
+  margin: 0;
 `;
 
 //props is nights, lift that back up once we figure out the nights
@@ -31,9 +30,24 @@ class DatesGuestsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkIn: 0,
-      checkOut: 0,
+      checkIn: '',
+      checkOut: '',
     };
+    this.handleCheckIn = this.handleCheckIn.bind(this);
+    this.handleCheckOut = this.handleCheckOut.bind(this);
+  }
+
+  handleCheckIn(date) {
+    console.log('checkIn: ', date);
+    this.setState({
+      checkIn: date,
+    });
+  }
+
+  handleCheckOut(date) {
+    this.setState({
+      checkOut: date,
+    });
   }
 
   render() {
@@ -43,6 +57,9 @@ class DatesGuestsView extends React.Component {
           nights={this.props.nights}
           checkIn={this.state.checkIn}
           checkOut={this.state.checkOut}
+          checkInDate={this.handleCheckIn}
+          checkOutDate={this.handleCheckOut}
+          handleNights={this.props.handleNights}
         />
         <Line />
         <Guests>

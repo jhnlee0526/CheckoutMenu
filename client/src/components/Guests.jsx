@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import SingleGuest from './SingleGuest.jsx';
 
 const Dropdown = styled.div`
-  display: block;
-  position: absolute;
-  width: 350px;
+  display: inline-block;
+  position: fixed;
+  width: 200px;
+  height: 200px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 16px;
   border: .5px solid #dddddd;
   background: white;
   border-radius: 4px;
-  padding: 15px;
-  margin: 10px;
+  padding: 5px;
   cursor: default;
 `;
 
@@ -32,7 +32,7 @@ const CloseButton = styled.button`
 const Msg = styled.div`
   margin: 10px 5px;
   color: #717171;
-  font-size: 10px;
+  font-size: 8px;
   cursor: text;
 `;
 

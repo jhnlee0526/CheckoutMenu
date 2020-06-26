@@ -2,39 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import Modal from './CalendarModal.jsx';
 
-
 const CheckInDate = styled.div`
-  border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
   display: inline-block;
   text-align: left;
   float: left;
-  width: 135px;
-  margin: 5px;
+  width: 88px;
+  font-size: 10px;
+  border-right: .5px solid #717171;
 `;
 
 //on hover, it will be black
-
-const Vertical = styled.div`
-  border-left: 1px solid #717171;
-  height: 68px;
-  position: absolute;
-  left: 190px;
-`;
-
 const CheckOutDate = styled.div`
-  border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
   display: inline-block;
   text-align: left;
   float: right;
-  width: 135px;
-  margin: 5px;
+  width: 88px;
+  // margin: 5px;
+  font-size: 10px;
+`;
+
+const CheckInCheckOut = styled.div`
+  font-size: 7px;
 `;
 
 class DatesView extends React.Component {
   constructor(props) {
     super(props);
+    // props are checkIn, checkOut, and nights
     this.state = {
       show: false,
     };
@@ -42,36 +38,48 @@ class DatesView extends React.Component {
     this.showModal = this.showModal.bind(this);
   }
 
-  handleClick(e) {
-    e.preventDefault();
+  handleClick() {
     this.setState({
       show: true,
     });
   }
 
-  showModal(e) {
-    e.preventDefault();
+  showModal() {
     this.setState({
       show: false,
     });
   }
 
   render() {
+    let modalCheckIn = 'Add date';
+    let modalCheckOut = 'Add date';
+    if (this.props.checkOut) {
+      modalCheckIn = this.props.checkIn;
+      modalCheckOut = this.props.checkOut;
+    }
     return (
       <div>
         <div onClick={this.handleClick}>
           <CheckInDate>
-            <div>CHECK-IN</div>
-            <div>Add date</div>
+            <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
+            <div>{modalCheckIn}</div>
           </CheckInDate>
-          <Vertical />
           <CheckOutDate>
-            <div>CHECKOUT</div>
-            <div>Add date</div>
+            <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
+            <div>{modalCheckOut}</div>
           </CheckOutDate>
         </div>
         <div>
-          <Modal onClick={this.showModal} show={this.state.show} />
+          <Modal
+            onClick={this.showModal}
+            show={this.state.show}
+            nights={this.props.nights}
+            checkIn={this.props.checkIn}
+            checkOut={this.props.checkOut}
+            checkInDate={this.props.checkInDate}
+            checkOutDate={this.props.checkOutDate}
+            handleNights={this.props.handleNights}
+          />
         </div>
       </div>
     );
