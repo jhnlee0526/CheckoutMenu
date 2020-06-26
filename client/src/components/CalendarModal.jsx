@@ -148,6 +148,7 @@ class CalendarModal extends React.Component {
     this.handleCheckInDate = this.handleCheckInDate.bind(this);
     this.handleCheckOutDate = this.handleCheckOutDate.bind(this);
     this.getNumberOfNights = this.getNumberOfNights.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   componentDidMount() {
@@ -163,6 +164,11 @@ class CalendarModal extends React.Component {
       checkInDate: date,
     });
     this.props.checkInDate(date);
+    if (this.state.checkOutDate) {
+      this.setState({
+        checkOutDate: '',
+      });
+    }
   }
 
   handleCheckOutDate(date) {
@@ -175,14 +181,22 @@ class CalendarModal extends React.Component {
   }
 
   getNumberOfNights(checkOutDate) {
-    console.log(this.state.checkOutDate);
     let endDate = moment(checkOutDate);
     let startDate = moment(this.state.checkInDate);
     let nights = endDate.diff(startDate, 'days');
     this.setState({
       nights: nights,
     });
-    this.props.handleNights(nights);
+    this.props.handleNights(nights, this.state.checkInDate, checkOutDate);
+  }
+
+  handleClear() {
+    this.setState({
+      checkInDate: '',
+      checkOutDate: '',
+    });
+    this.props.checkInDate('');
+    this.props.checkOutDate('');
   }
 
   getNextMonths() {
@@ -251,8 +265,8 @@ class CalendarModal extends React.Component {
             <SingleCalendar
               months={this.state.months}
               nights={this.props.nights}
-              checkIn={this.props.checkIn}
-              checkOut={this.props.checkOut}
+              checkIn={this.state.checkInDate}
+              checkOut={this.state.checkOutDate}
               handleCheckIn={this.handleCheckInDate}
               handleCheckOut={this.handleCheckOutDate}
             />
@@ -265,7 +279,7 @@ class CalendarModal extends React.Component {
               <Close onClick={this.handleClose}>Close</Close>
             </ClearClose>
             <ClearClose>
-              <Clear>Clear Dates</Clear>
+              <Clear onClick={this.handleClear}>Clear Dates</Clear>
             </ClearClose>
           </Container>
         </Modal>

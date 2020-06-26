@@ -99,10 +99,13 @@ class SingleCalendar extends React.Component {
   }
 
   handleDayClick(e) {
+    console.log(this.props.checkOut);
     if (!this.props.checkIn) {
       this.props.handleCheckIn(`${e.target.id} ${e.target.innerHTML}`);
-    } else {
+    } else if (!this.props.checkOut) {
       this.props.handleCheckOut(`${e.target.id} ${e.target.innerHTML}`);
+    } else {
+      this.props.handleCheckIn(`${e.target.id} ${e.target.innerHTML}`);
     }
   }
 

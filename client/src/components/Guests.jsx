@@ -6,7 +6,7 @@ const Dropdown = styled.div`
   display: inline-block;
   position: fixed;
   width: 200px;
-  height: 200px;
+  height: 215px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 16px;
   border: .5px solid #dddddd;
   background: white;

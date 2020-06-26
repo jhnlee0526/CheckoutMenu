@@ -73,8 +73,11 @@ class App extends React.Component {
       nights: 0,
       dropDown: 0,
       calculationsData: [{}, {}, {}],
+      checkIn: '',
+      checkOut: '',
     };
     this.handleNights = this.handleNights.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -102,12 +105,20 @@ class App extends React.Component {
       });
   }
 
-  handleNights(nights) {
+  handleNights(nights, checkIn, checkOut) {
     this.setState({
       nights: nights,
       calendar: true,
+      checkIn: checkIn,
+      checkOut: checkOut,
     });
     this.componentDidMount();
+  }
+
+  handleButtonClick() {
+    console.log(this.state.nights);
+    console.log(this.state.checkIn);
+    console.log(this.state.checkOut);
   }
 
   render() {
@@ -142,9 +153,11 @@ class App extends React.Component {
           nights={this.state.nights}
           guestsAllowed={this.state.propertyData.total_guests_allowed}
           handleNights={this.handleNights}
+          checkIn={this.state.checkIn}
+          checkOut={this.state.checkOut}
         />
         {dates}
-        <Button>{button}</Button>
+        <Button onClick={this.handleButtonClick}>{button}</Button>
         <Footer>{msg}</Footer>
       </TotalWrapper>
     );
