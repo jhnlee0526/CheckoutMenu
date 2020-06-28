@@ -36,7 +36,6 @@ app.post('/api/rooms/:roomId/menu', (req, res) => {
       res.status(200).send(results);
     }
   });
-  res.sendStatus(200);
 });
 
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));

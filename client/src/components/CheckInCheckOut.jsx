@@ -25,6 +25,14 @@ const CheckOutDate = styled.div`
 
 const CheckInCheckOut = styled.div`
   font-size: 7px;
+  font-weight: 600;
+  padding: 1px;
+`;
+
+const DateAddDate = styled.div`
+  font-size: 9px;
+  font-weight: 300;
+  padding: 1px;
 `;
 
 class DatesView extends React.Component {
@@ -62,11 +70,11 @@ class DatesView extends React.Component {
         <div onClick={this.handleClick}>
           <CheckInDate>
             <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
-            <div>{modalCheckIn}</div>
+            <DateAddDate>{modalCheckIn}</DateAddDate>
           </CheckInDate>
           <CheckOutDate>
             <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
-            <div>{modalCheckOut}</div>
+            <DateAddDate>{modalCheckOut}</DateAddDate>
           </CheckOutDate>
         </div>
         <div>

@@ -69,6 +69,10 @@ class DatesGuestsView extends React.Component {
             getAdultCount={this.props.getAdultCount}
             getChildrenCount={this.props.getChildrenCount}
             getInfantCount={this.props.getInfantCount}
+            guests={this.props.guests}
+            adults={this.props.adults}
+            children={this.props.children}
+            infants={this.props.infants}
           />
         </Guests>
       </Container>

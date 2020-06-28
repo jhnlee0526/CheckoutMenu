@@ -119,6 +119,18 @@ const Close = styled.button`
   }
 `;
 
+const CheckInCheckOut = styled.div`
+  font-size: 7px;
+  font-weight: 600;
+  padding: 1px;
+`;
+
+const DateAddDate = styled.div`
+  font-size: 9px;
+  padding: 1px;
+  font-weight: 300;
+`;
+
 const Keeb = styled.img`
   width: 15px;
   height: auto;
@@ -252,12 +264,12 @@ class CalendarModal extends React.Component {
             <CheckContainer>
               <div>
               <CheckInDate>
-                <div>CHECK-IN</div>
-                <div>{currentCheckIn}</div>
+                <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
+                <DateAddDate>{currentCheckIn}</DateAddDate>
               </CheckInDate>
               <CheckOutDate>
-                <div>CHECKOUT</div>
-                <div>{currentCheckOut}</div>
+                <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
+                <DateAddDate>{currentCheckOut}</DateAddDate>
               </CheckOutDate>
               </div>
             </CheckContainer>

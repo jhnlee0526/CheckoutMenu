@@ -223,13 +223,15 @@ class App extends React.Component {
           nights={this.state.nights}
           guestsAllowed={this.state.propertyData.total_guests_allowed}
           handleNights={this.handleNights}
-          // checkIn={this.state.checkIn}
-          // checkOut={this.state.checkOut}
           clearPropertyData={this.handleClearDates}
           getGuestCount={this.getGuestCount}
           getAdultCount={this.getAdultCount}
           getChildrenCount={this.getChildrenCount}
           getInfantCount={this.getInfantCount}
+          guests={this.state.resGuestCount}
+          adults={this.state.adults}
+          children={this.state.children}
+          infants={this.state.infants}
         />
         {dates}
         <Button onClick={this.handleButtonClick}>{button}</Button>

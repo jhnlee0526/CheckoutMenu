@@ -20,17 +20,24 @@ const Button = styled.button`
 `;
 
 const EachGuest = styled.div`
-  padding: 12px 5px;
+  padding: 5px 0;
   font-size: 12px;
+  margin: 5px;
 `;
 
 const Msg = styled.div`
   font-size: 10px;
   cursor: text;
+  font-weight: 300;
 `;
 
 const Category = styled.div`
   display: inline-block;
+  height: 20px;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 12px;
+  font-weight: 500;
 `;
 
 const Buttons = styled.div`
@@ -65,15 +72,16 @@ const TransparentButton = styled.button`
 
 const Item = styled.div`
   cursor: text;
+  display: inline-block;
 `;
 
 class SingleGuest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      adults: 1,
-      children: 0,
-      infants: 0,
+      adults: props.adults,
+      children: props.children,
+      infants: props.infants,
     };
     this.handlePlusClick = this.handlePlusClick.bind(this);
     this.handleMinusClick = this.handleMinusClick.bind(this);
