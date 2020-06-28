@@ -18,7 +18,7 @@ const Right = styled.div`
 `;
 
 const Rate = styled.span`
-  font-weight: bold;
+  font-weight: 500;
   font-size: 14px;
 `;
 

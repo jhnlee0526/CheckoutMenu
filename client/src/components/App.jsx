@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import moment from 'moment';
 import { createGlobalStyle } from "styled-components";
 import Calculations from './Calculations.jsx';
 import Loading from './Loading.jsx';
@@ -71,13 +72,23 @@ class App extends React.Component {
       propertyData: {},
       calendar: false,
       nights: 0,
-      dropDown: 0,
       calculationsData: [{}, {}, {}],
       checkIn: '',
       checkOut: '',
+      totalCost: 0,
+      resGuestCount: 1,
+      adults: 1,
+      children: 0,
+      infants: 0,
     };
     this.handleNights = this.handleNights.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleClearDates = this.handleClearDates.bind(this);
+    this.getTotalCost = this.getTotalCost.bind(this);
+    this.getGuestCount = this.getGuestCount.bind(this);
+    this.getAdultCount = this.getAdultCount.bind(this);
+    this.getChildrenCount = this.getChildrenCount.bind(this);
+    this.getInfantCount = this.getInfantCount.bind(this);
   }
 
   componentDidMount() {
@@ -89,20 +100,51 @@ class App extends React.Component {
           propertyData: data,
           calculationsData: [
             {cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5},
-            // edit this depending on the amount of nights -- avg it to be 12%;
             {serviceFee: Math.floor(data.nightly_rate * this.state.nights * .12)},
-            // edit this depending on the amount of nights -- avg it to be 11%
             {occupancyFee: Math.floor(data.nightly_rate * this.state.nights * .11)},
           ],
         });
         this.setState({
           loading: false,
-          // calendar: true,
         });
       })
       .catch((err) => {
         console.log('react get request error: ', err);
       });
+  }
+
+  getTotalCost(total) {
+    this.setState({
+      totalCost: total,
+    });
+  }
+
+  getGuestCount(guests) {
+    this.setState({
+      resGuestCount: guests,
+    });
+  }
+
+  getAdultCount(adults) {
+    this.setState({
+      adults: adults,
+    });
+  }
+
+  getChildrenCount(children) {
+    this.setState({
+      children: children,
+    });
+  }
+
+  getInfantCount(infants) {
+    this.setState({ infants });
+  }
+
+  handleClearDates() {
+    this.setState({
+      calendar: false,
+    });
   }
 
   handleNights(nights, checkIn, checkOut) {
@@ -116,9 +158,37 @@ class App extends React.Component {
   }
 
   handleButtonClick() {
-    console.log(this.state.nights);
-    console.log(this.state.checkIn);
-    console.log(this.state.checkOut);
+    const today = moment().format('YYYY-MM-DD');
+    let year = '2020';
+    let checkIn = moment(`${this.state.checkIn} ${year}`, 'MMMM DD YYYY').format('YYYY-MM-DD');
+    let checkOut = moment(`${this.state.checkOut} ${year}`, 'MMMM DD YYYY').format('YYYY-MM-DD');
+    if (checkOut < today) {
+      year = '2021';
+      checkOut = moment(`${this.state.checkOut} ${year}`, 'MMMM DD YYYY').format('YYYY-MM-DD');
+      if (checkIn < today) {
+        checkIn = moment(`${this.state.checkIn} ${year}`, 'MMMM DD YYYY').format('YYYY-MM-DD');
+      }
+    }
+    const reservationData = {
+      property_id: this.state.propertyData.id,
+      check_in: checkIn,
+      check_out: checkOut,
+      nights: this.state.nights,
+      nightly_rate: this.state.propertyData.nightly_rate,
+      total_cost: this.state.totalCost,
+      guest_count: this.state.resGuestCount,
+      adults: this.state.adults,
+      children: this.state.children,
+      infants: this.state.infants,
+    };
+    console.log(reservationData);
+    axios.post(`http://localhost:3003/api/rooms/${reservationData.property_id}/menu`, reservationData)
+      .then((res) => {
+        console.log('axios post response: ', res);
+      })
+      .catch((err) => {
+        console.log('axios post error: ', err);
+      });
   }
 
   render() {
@@ -142,7 +212,7 @@ class App extends React.Component {
     } else {
       // base price will change based on the amount of nights
       const basePrice = this.state.propertyData.nightly_rate * this.state.nights;
-      dates = <Calculations rate={this.state.propertyData.nightly_rate} calculationsData={this.state.calculationsData} basePrice={basePrice} nights={this.state.nights} />;
+      dates = <Calculations rate={this.state.propertyData.nightly_rate} calculationsData={this.state.calculationsData} basePrice={basePrice} nights={this.state.nights} getTotalCost={this.getTotalCost} />;
     }
 
     return (
@@ -153,8 +223,13 @@ class App extends React.Component {
           nights={this.state.nights}
           guestsAllowed={this.state.propertyData.total_guests_allowed}
           handleNights={this.handleNights}
-          checkIn={this.state.checkIn}
-          checkOut={this.state.checkOut}
+          // checkIn={this.state.checkIn}
+          // checkOut={this.state.checkOut}
+          clearPropertyData={this.handleClearDates}
+          getGuestCount={this.getGuestCount}
+          getAdultCount={this.getAdultCount}
+          getChildrenCount={this.getChildrenCount}
+          getInfantCount={this.getInfantCount}
         />
         {dates}
         <Button onClick={this.handleButtonClick}>{button}</Button>

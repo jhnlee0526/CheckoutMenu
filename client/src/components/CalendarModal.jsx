@@ -66,7 +66,7 @@ const CheckOutDate = styled.div`
 
 const SelectDiv = styled.div`
   margin-bottom: 3px;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 16px;
 `;
 
@@ -197,6 +197,7 @@ class CalendarModal extends React.Component {
     });
     this.props.checkInDate('');
     this.props.checkOutDate('');
+    this.props.clearPropertyData();
   }
 
   getNextMonths() {

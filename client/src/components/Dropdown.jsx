@@ -71,24 +71,28 @@ class Dropdown extends React.Component {
     this.setState((prevState, props) => ({
       guests: prevState.guests + 1,
     }));
+    this.props.getGuestCount(this.state.guests + 1);
   }
 
   handleGuestMinusClick(e) {
     this.setState((prevState, props) => ({
       guests: prevState.guests - 1,
     }));
+    this.props.getGuestCount(this.state.guests - 1);
   }
 
   handleInfantPlusClick(e) {
     this.setState((prevState, props) => ({
       infants: prevState.infants + 1,
     }));
+    this.props.getInfantCount(this.state.infants + 1);
   }
 
   handleInfantMinusClick(e) {
     this.setState((prevState, props) => ({
       infants: prevState.infants - 1,
     }));
+    this.props.getInfantCount(this.state.infants - 1);
   }
 
   render() {
@@ -110,7 +114,8 @@ class Dropdown extends React.Component {
           infantPlusClick={this.handleInfantPlusClick}
           infantMinusClick={this.handleInfantMinusClick}
           handleClick={this.handleClick}
-
+          getAdultCount={this.props.getAdultCount}
+          getChildrenCount={this.props.getChildrenCount}
         />
       );
     } else {

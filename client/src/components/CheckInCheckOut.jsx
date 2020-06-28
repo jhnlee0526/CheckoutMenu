@@ -79,6 +79,7 @@ class DatesView extends React.Component {
             checkInDate={this.props.checkInDate}
             checkOutDate={this.props.checkOutDate}
             handleNights={this.props.handleNights}
+            clearPropertyData={this.props.clearPropertyData}
           />
         </div>
       </div>

@@ -58,6 +58,8 @@ class Guests extends React.Component {
             infantPlusClick={this.props.infantPlusClick}
             infantMinusClick={this.props.infantMinusClick}
             guestsAllowed={this.props.guestsAllowed}
+            getAdultCount={this.props.getAdultCount}
+            getChildrenCount={this.props.getChildrenCount}
           />
         ))}
         <Msg>

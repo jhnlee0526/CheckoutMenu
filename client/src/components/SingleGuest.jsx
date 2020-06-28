@@ -85,11 +85,13 @@ class SingleGuest extends React.Component {
         adults: prevState.adults + 1,
       }));
       this.props.guestPlusClick();
+      this.props.getAdultCount(this.state.adults + 1);
     } else if (this.props.item === 'Children') {
       this.setState((prevState, props) => ({
         children: prevState.children + 1,
       }));
       this.props.guestPlusClick();
+      this.props.getChildrenCount(this.state.children + 1);
     } else if (this.props.item === 'Infants') {
       this.setState((prevState, props) => ({
         infants: prevState.infants + 1,
@@ -104,11 +106,13 @@ class SingleGuest extends React.Component {
         adults: prevState.adults - 1,
       }));
       this.props.guestMinusClick();
+      this.props.getAdultCount(this.state.adults - 1);
     } else if (this.props.item === 'Children') {
       this.setState((prevState, props) => ({
         children: prevState.children - 1,
       }));
       this.props.guestMinusClick();
+      this.props.getChildrenCount(this.state.children - 1);
     } else if (this.props.item === 'Infants') {
       this.setState((prevState, props) => ({
         infants: prevState.infants - 1,
