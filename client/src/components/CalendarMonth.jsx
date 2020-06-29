@@ -25,6 +25,7 @@ const CheckOut = styled.span`
 const Month = styled.span`
   justify-content: center;
   font-size: 10px;
+  font-weight: 500;
   // margin: 10px;
 `;
 

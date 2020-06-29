@@ -17,30 +17,23 @@ const BetweenWeekdays = styled.span`
 
 const EachWeek = styled.tr`
   font-size: 10px;
+  margin: 2px;
 `;
 
-// const EachDay = styled.td.attrs(props => ({
-//   className: props.className,
-// }))`
-//   & .calendar-day__{
-//     text-decoration: line-through;
-//     color: #717171;
-//   }
-//   & .calendar-day_today{
-//     font-weight: bold;
-//   }
-// `;
-
-// const EachDay = styled.td`
-//   ${props => props.calendar-day__}
-//   text-decoration: line-through;
-//   color: #717171;
-// `;
-
-// const EachDay = styled.td`
-//   text-decoration: ${props => props.calendar-day__ ? 'line-through' : ''};
-//   color: ${props => props.calendar-day__ ? '#717171' : 'black'};;
-// `;
+const EachDay = styled.td`
+  font-weight: 500;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  border-radius: 55%;
+  border: 1px solid transparent;
+  :hover {
+    border-radius: 55%;
+    border: 1px solid black;
+  }
+`;
 
 const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12};
 
@@ -130,6 +123,7 @@ class SingleCalendar extends React.Component {
     }
     // had to add the two underscores at the end of 'calendar-day__' to account for the possibilites of today and the date;
     if (e.target.className !== 'empty calendar-day' && (e.target.className !== 'calendar-day__')) {
+      console.log(dateSelected);
       if (!this.props.checkIn) {
         this.setState({
           firstSelected: dateSelected,
@@ -179,18 +173,29 @@ class SingleCalendar extends React.Component {
         let current = '';
         let available = '';
         const date = `${eachMonth} ${d} ${currentYear}`;
+        const prevDayStyle = {
+          textDecoration: 'line-through',
+          color: '#dddddd',
+          fontSize: '10px',
+          cursor: 'default',
+          width: '20px',
+          height: '20px',
+          padding: '2px',
+          borderRadius: '55%',
+          border: '1px solid transparent',
+        };
+        let eachDay;
         if (date === currentDate) {
           current = 'today';
-        }
-        if (moment(currentDate).isBefore(date, 'day')) {
+          eachDay = <EachDay key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>{d}</EachDay>;
+        } else if (moment(currentDate).isBefore(date, 'day')) {
           available = date;
           // available = 'available';
+          eachDay = <EachDay key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</EachDay>;
+        } else {
+          eachDay = <td style={prevDayStyle} key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</td>;
         }
-
-        // if date occupied, push one Element, else push another element
-        allDaysInMonth.push(
-          <td key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</td>,
-        );
+        allDaysInMonth.push(eachDay);
       }
 
       let totalSlots = [...blanks, ...allDaysInMonth];
