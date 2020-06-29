@@ -1,8 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import CalendarMonth from './CalendarMonth.jsx';
 import CalendarView from './CalendarView.jsx';
+import { date } from 'faker';
 
 const Weekdays = styled.span`
   padding: 7px;
@@ -49,6 +50,7 @@ class SingleCalendar extends React.Component {
       previous: false,
       next: true,
       firstSelected: '',
+      clicked: false,
     };
     this.currentDay = this.currentDay.bind(this);
     this.getDaysInMonth = this.getDaysInMonth.bind(this);
@@ -56,6 +58,7 @@ class SingleCalendar extends React.Component {
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
+    this.handleCheckInClick = this.handleCheckInClick.bind(this);
   }
 
   componentDidMount() {
@@ -118,16 +121,18 @@ class SingleCalendar extends React.Component {
     // if day is empty or before current day or not available, do nothing...
     // const dateSelected = e.target.className.slice(14);
     let dateSelected = `${e.target.id} ${e.target.innerHTML} ${e.target.className.slice(-4)}`;
-    if (e.target.className === 'calendar-day_today_') {
+    if (e.target.className.slice(-6) === 'today_') {
       dateSelected = `${e.target.id} ${e.target.innerHTML} ${new Date().getFullYear()}`;
     }
+    // console.log(dateSelected.slice(0, 3));
     // had to add the two underscores at the end of 'calendar-day__' to account for the possibilites of today and the date;
-    if (e.target.className !== 'empty calendar-day' && (e.target.className !== 'calendar-day__')) {
-      console.log(dateSelected);
+    // had to make sure the first 3 characters in date selected weren't ' <t' as that was a strange bug
+    if (e.target.className !== 'empty calendar-day' && (e.target.className !== 'calendar-day__') && (dateSelected.slice(0, 3) !== ' <t')) {
       if (!this.props.checkIn) {
         this.setState({
           firstSelected: dateSelected,
         });
+        this.handleCheckInClick(e);
         this.props.handleCheckIn(dateSelected);
       } else if (!this.props.checkOut) {
         if (moment(dateSelected).isAfter(this.state.firstSelected, 'day')) {
@@ -135,6 +140,7 @@ class SingleCalendar extends React.Component {
         }
       } else {
         this.props.handleCheckIn(dateSelected);
+        this.handleCheckInClick(e);
         // this.props.handleCheckOut('');
         this.setState({
           firstSelected: dateSelected,
@@ -142,6 +148,14 @@ class SingleCalendar extends React.Component {
         this.props.clearPropertyData();
       }
     }
+  }
+
+  handleCheckInClick(e) {
+    let dateSelected = `${e.target.id} ${e.target.innerHTML} ${e.target.className.slice(-4)}`;
+    // console.log(dateSelected);
+    this.setState({
+      clicked: true,
+    });
   }
 
   render() {
@@ -185,16 +199,33 @@ class SingleCalendar extends React.Component {
           border: '1px solid transparent',
         };
         let eachDay;
+        const clickedStyle = {
+          color: 'white',
+          background: 'black',
+        };
+
         if (date === currentDate) {
           current = 'today';
-          eachDay = <EachDay key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>{d}</EachDay>;
+          if (this.state.clicked && this.state.firstSelected === date) {
+            eachDay = <EachDay style={clickedStyle} key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</EachDay>;
+          } else if (!this.state.clicked) {
+            eachDay = <EachDay key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</EachDay>;
+          } else {
+            eachDay = <td style={prevDayStyle} key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</td>;
+          }
         } else if (moment(currentDate).isBefore(date, 'day')) {
           available = date;
-          // available = 'available';
-          eachDay = <EachDay key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</EachDay>;
+          if (this.state.clicked && this.state.firstSelected === date) {
+            eachDay = <EachDay style={clickedStyle} key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</EachDay>;
+          } else if (this.state.clicked && moment(this.state.firstSelected).isAfter(date, 'day')) {
+            eachDay = <td style={prevDayStyle} key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</td>;
+          } else {
+            eachDay = <EachDay key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`} >{d}</EachDay>;
+          }
         } else {
           eachDay = <td style={prevDayStyle} key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</td>;
         }
+
         allDaysInMonth.push(eachDay);
       }
 
