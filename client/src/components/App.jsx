@@ -98,11 +98,6 @@ class App extends React.Component {
         console.log('react get request response: ', data);
         this.setState({
           propertyData: data,
-          calculationsData: [
-            {cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5},
-            {serviceFee: Math.floor(data.nightly_rate * this.state.nights * .12)},
-            {occupancyFee: Math.floor(data.nightly_rate * this.state.nights * .11)},
-          ],
         });
         this.setState({
           loading: false,
@@ -153,8 +148,13 @@ class App extends React.Component {
       calendar: true,
       checkIn: checkIn,
       checkOut: checkOut,
+      calculationsData: [
+        {cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5},
+        {serviceFee: Math.floor(this.state.propertyData.nightly_rate * nights * .12)},
+        {occupancyFee: Math.floor(this.state.propertyData.nightly_rate * nights * .11)},
+      ],
     });
-    this.componentDidMount();
+    // this.componentDidMount();
   }
 
   handleButtonClick() {
