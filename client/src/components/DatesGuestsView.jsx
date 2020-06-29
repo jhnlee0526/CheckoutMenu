@@ -38,7 +38,6 @@ class DatesGuestsView extends React.Component {
   }
 
   handleCheckIn(date) {
-    console.log('checkIn: ', date);
     this.setState({
       checkIn: date,
     });
@@ -60,10 +59,21 @@ class DatesGuestsView extends React.Component {
           checkInDate={this.handleCheckIn}
           checkOutDate={this.handleCheckOut}
           handleNights={this.props.handleNights}
+          clearPropertyData={this.props.clearPropertyData}
         />
         <Line />
         <Guests>
-          <Dropdown guestsAllowed={this.props.guestsAllowed} />
+          <Dropdown
+            guestsAllowed={this.props.guestsAllowed}
+            getGuestCount={this.props.getGuestCount}
+            getAdultCount={this.props.getAdultCount}
+            getChildrenCount={this.props.getChildrenCount}
+            getInfantCount={this.props.getInfantCount}
+            guests={this.props.guests}
+            adults={this.props.adults}
+            children={this.props.children}
+            infants={this.props.infants}
+          />
         </Guests>
       </Container>
     );

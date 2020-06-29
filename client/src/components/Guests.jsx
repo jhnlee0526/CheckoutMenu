@@ -6,7 +6,7 @@ const Dropdown = styled.div`
   display: inline-block;
   position: fixed;
   width: 200px;
-  height: 200px;
+  height: 215px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 16px;
   border: .5px solid #dddddd;
   background: white;
@@ -32,8 +32,9 @@ const CloseButton = styled.button`
 const Msg = styled.div`
   margin: 10px 5px;
   color: #717171;
-  font-size: 8px;
+  font-size: 9px;
   cursor: text;
+  padding: 2px;
 `;
 
 class Guests extends React.Component {
@@ -52,12 +53,16 @@ class Guests extends React.Component {
             item={item}
             key={i}
             guests={this.props.guests}
-            infants={this.props.infants}
             guestPlusClick={this.props.guestPlusClick}
             guestMinusClick={this.props.guestMinusClick}
             infantPlusClick={this.props.infantPlusClick}
             infantMinusClick={this.props.infantMinusClick}
             guestsAllowed={this.props.guestsAllowed}
+            getAdultCount={this.props.getAdultCount}
+            getChildrenCount={this.props.getChildrenCount}
+            adults={this.props.adults}
+            children={this.props.children}
+            infants={this.props.infants}
           />
         ))}
         <Msg>

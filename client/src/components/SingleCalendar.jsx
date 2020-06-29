@@ -15,9 +15,32 @@ const BetweenWeekdays = styled.span`
   margin: 13px;
 `;
 
-const EachDay = styled.tr`
+const EachWeek = styled.tr`
   font-size: 10px;
 `;
+
+// const EachDay = styled.td.attrs(props => ({
+//   className: props.className,
+// }))`
+//   & .calendar-day__{
+//     text-decoration: line-through;
+//     color: #717171;
+//   }
+//   & .calendar-day_today{
+//     font-weight: bold;
+//   }
+// `;
+
+// const EachDay = styled.td`
+//   ${props => props.calendar-day__}
+//   text-decoration: line-through;
+//   color: #717171;
+// `;
+
+// const EachDay = styled.td`
+//   text-decoration: ${props => props.calendar-day__ ? 'line-through' : ''};
+//   color: ${props => props.calendar-day__ ? '#717171' : 'black'};;
+// `;
 
 const calendarKeys = {January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12};
 
@@ -32,7 +55,7 @@ class SingleCalendar extends React.Component {
       end: 2,
       previous: false,
       next: true,
-      // value: '',
+      firstSelected: '',
     };
     this.currentDay = this.currentDay.bind(this);
     this.getDaysInMonth = this.getDaysInMonth.bind(this);
@@ -99,10 +122,31 @@ class SingleCalendar extends React.Component {
   }
 
   handleDayClick(e) {
-    if (!this.props.checkIn) {
-      this.props.handleCheckIn(`${e.target.id} ${e.target.innerHTML}`);
-    } else {
-      this.props.handleCheckOut(`${e.target.id} ${e.target.innerHTML}`);
+    // if day is empty or before current day or not available, do nothing...
+    // const dateSelected = e.target.className.slice(14);
+    let dateSelected = `${e.target.id} ${e.target.innerHTML} ${e.target.className.slice(-4)}`;
+    if (e.target.className === 'calendar-day_today_') {
+      dateSelected = `${e.target.id} ${e.target.innerHTML} ${new Date().getFullYear()}`;
+    }
+    // had to add the two underscores at the end of 'calendar-day__' to account for the possibilites of today and the date;
+    if (e.target.className !== 'empty calendar-day' && (e.target.className !== 'calendar-day__')) {
+      if (!this.props.checkIn) {
+        this.setState({
+          firstSelected: dateSelected,
+        });
+        this.props.handleCheckIn(dateSelected);
+      } else if (!this.props.checkOut) {
+        if (moment(dateSelected).isAfter(this.state.firstSelected, 'day')) {
+          this.props.handleCheckOut(dateSelected);
+        }
+      } else {
+        this.props.handleCheckIn(dateSelected);
+        // this.props.handleCheckOut('');
+        this.setState({
+          firstSelected: dateSelected,
+        });
+        this.props.clearPropertyData();
+      }
     }
   }
 
@@ -110,10 +154,11 @@ class SingleCalendar extends React.Component {
     const daysOfWeek = moment.weekdaysMin();
     const weekdays = daysOfWeek.map((day, i) => <Weekdays key={i} className="week-days">{day}</Weekdays>);
     const today = new Date();
+    let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
+    let currentDate = moment(today).format('MMMM DD YYYY');
     let calendarMonth = [];
     let monthsAndYear = [];
-    // console.log('MONTH: ', this.state.currentMonth);
 
     for (let i = 0; i < this.props.months.length; i++) {
       let eachMonth = this.props.months[i];
@@ -131,9 +176,20 @@ class SingleCalendar extends React.Component {
 
       let allDaysInMonth = [];
       for (let d = 1; d <= this.getDaysInMonth(eachMonth, currentYear); d++) {
-        let current = d == this.currentDay() ? "today" : "";
+        let current = '';
+        let available = '';
+        const date = `${eachMonth} ${d} ${currentYear}`;
+        if (date === currentDate) {
+          current = 'today';
+        }
+        if (moment(currentDate).isBefore(date, 'day')) {
+          available = date;
+          // available = 'available';
+        }
+
+        // if date occupied, push one Element, else push another element
         allDaysInMonth.push(
-          <td key={`day${d}`} className={`calendar-day ${current}`} id={`${eachMonth}`} >{d}</td>,
+          <td key={`day${d}`} className={`calendar-day_${current}_${available}`} id={`${eachMonth}`}>{d}</td>,
         );
       }
 
@@ -152,7 +208,7 @@ class SingleCalendar extends React.Component {
           rows.push(cells);
         }
       });
-      calendarMonth.push(rows.map((d, i) => (<EachDay onClick={this.handleDayClick} key={i}>{d}</EachDay>)));
+      calendarMonth.push(rows.map((d, i) => (<EachWeek onClick={this.handleDayClick} key={i}>{d}</EachWeek>)));
       monthsAndYear.push(`${eachMonth} ${currentYear}`);
     }
     //once next is clicked, change to 1, 3. 

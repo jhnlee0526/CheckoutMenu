@@ -31,34 +31,46 @@ const Line = styled.div`
   border-bottom: .5px solid #dddddd;
 `;
 
-const Calculations = (props) => {
-  // calculations data is an array, so need to fix that
-  const propsData = props.calculationsData;
-  const total = props.basePrice + propsData[0].cleaningFee + propsData[1].serviceFee + propsData[2].occupancyFee;
-  return (
-    <Container>
-      <LineItem>
-        {/* edit this to be however many nights it is */}
-        <Left>${props.rate} x {props.nights} nights</Left>
-        {/* enter the question mark button  */}
-        <Right>${props.basePrice}</Right>
-      </LineItem>
+class Calculations extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      total: 0,
+    };
+  }
 
-      <div>
-        {propsData.map((data, i) => (
-          <CalculationItem data={data} key={i} />
-        ))}
-      </div>
+  componentDidMount() {
+    const propsData = this.props.calculationsData;
+    const total = this.props.basePrice + propsData[0].cleaningFee + propsData[1].serviceFee + propsData[2].occupancyFee;
+    this.setState({
+      total: total,
+    });
+    this.props.getTotalCost(total);
+  }
 
-      {/* line to separate calculations and total */}
-      <Line></Line>
-
-      <Total>
-        <Left>Total</Left>
-        <Right>${total}</Right>
-      </Total>
-    </Container>
-  );
+  render() {
+    const propsData = this.props.calculationsData;
+    return (
+      <Container>
+        <LineItem>
+          <Left>${this.props.rate} x {this.props.nights} nights</Left>
+          {/* enter the question mark button  */}
+          <Right>${this.props.basePrice}</Right>
+        </LineItem>
+        <div>
+          {propsData.map((data, i) => (
+            <CalculationItem data={data} key={i} />
+          ))}
+        </div>
+        {/* line to separate calculations and total */}
+        <Line></Line>
+        <Total>
+          <Left>Total</Left>
+          <Right>${this.state.total}</Right>
+        </Total>
+      </Container>
+    );
+  }
 };
 
 export default Calculations;

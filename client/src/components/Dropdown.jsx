@@ -16,10 +16,14 @@ const Guest = styled.span`
 
 const GuestSizing = styled.div`
   font-size: 7px;
+  font-weight: 600;
+  padding: 1px;
 `;
 
 const AllGuestsSizing = styled.div`
-  font-size: 10px;
+  font-size: 9px;
+  padding: 1px;
+  font-weight: 300;
 `;
 
 const DownArrow = styled.img`
@@ -43,8 +47,8 @@ class Dropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      guests: 1,
-      infants: 0,
+      guests: props.guests,
+      infants: props.infants,
       dropdown: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -71,24 +75,28 @@ class Dropdown extends React.Component {
     this.setState((prevState, props) => ({
       guests: prevState.guests + 1,
     }));
+    this.props.getGuestCount(this.state.guests + 1);
   }
 
   handleGuestMinusClick(e) {
     this.setState((prevState, props) => ({
       guests: prevState.guests - 1,
     }));
+    this.props.getGuestCount(this.state.guests - 1);
   }
 
   handleInfantPlusClick(e) {
     this.setState((prevState, props) => ({
       infants: prevState.infants + 1,
     }));
+    this.props.getInfantCount(this.state.infants + 1);
   }
 
   handleInfantMinusClick(e) {
     this.setState((prevState, props) => ({
       infants: prevState.infants - 1,
     }));
+    this.props.getInfantCount(this.state.infants - 1);
   }
 
   render() {
@@ -110,7 +118,12 @@ class Dropdown extends React.Component {
           infantPlusClick={this.handleInfantPlusClick}
           infantMinusClick={this.handleInfantMinusClick}
           handleClick={this.handleClick}
-
+          getAdultCount={this.props.getAdultCount}
+          getChildrenCount={this.props.getChildrenCount}
+          // guests={this.props.guests}
+          adults={this.props.adults}
+          children={this.props.children}
+          // infants={this.props.infants}
         />
       );
     } else {
