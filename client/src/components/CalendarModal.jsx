@@ -43,7 +43,7 @@ const CheckContainer = styled.span`
 //on click, or when it is that component, it will have the border be black
 const CheckInDate = styled.div`
   border-radius: 5px;
-  border: 1px solid black;
+  // border: 1px solid black;
   padding: 8px;
   display: inline-block;
   text-align: left;
@@ -167,8 +167,11 @@ class CalendarModal extends React.Component {
     this.getNextMonths();
   }
 
-  handleClose() {
+  handleClose(param) {
     this.props.onClick();
+    if (!this.state.checkOutDate && param !== undefined) {
+      this.handleClear();
+    };
   }
 
   handleCheckInDate(date) {
@@ -255,6 +258,38 @@ class CalendarModal extends React.Component {
       selectDates = `${this.state.nights} night(s)`;
       currentNights = `${this.state.checkInDate} - ${this.state.checkOutDate}`;
     }
+    const dateBorder = {
+      border: '1px solid black',
+    };
+    let checkInBox;
+    let checkOutBox;
+    if (!this.state.checkInDate) {
+      checkInBox = (
+        <CheckInDate style={dateBorder}>
+          <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
+          <DateAddDate>{currentCheckIn}</DateAddDate>
+        </CheckInDate>
+      );
+      checkOutBox = (
+        <CheckOutDate>
+          <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
+          <DateAddDate>{currentCheckOut}</DateAddDate>
+        </CheckOutDate>
+      );
+    } else {
+      checkInBox = (
+        <CheckInDate>
+          <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
+          <DateAddDate>{currentCheckIn}</DateAddDate>
+        </CheckInDate>
+      );
+      checkOutBox = (
+        <CheckOutDate style={dateBorder}>
+          <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
+          <DateAddDate>{currentCheckOut}</DateAddDate>
+        </CheckOutDate>
+      );
+    }
     return (
       <div>
         <Modal>
@@ -266,14 +301,8 @@ class CalendarModal extends React.Component {
             </SelectContainer>
             <CheckContainer>
               <div>
-              <CheckInDate>
-                <CheckInCheckOut>CHECK-IN</CheckInCheckOut>
-                <DateAddDate>{currentCheckIn}</DateAddDate>
-              </CheckInDate>
-              <CheckOutDate>
-                <CheckInCheckOut>CHECKOUT</CheckInCheckOut>
-                <DateAddDate>{currentCheckOut}</DateAddDate>
-              </CheckOutDate>
+              {checkInBox}
+              {checkOutBox}
               </div>
             </CheckContainer>
           </Container>

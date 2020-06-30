@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  cursor: pointer;
+  // cursor: pointer;
 `;
 
 const CheckIn = styled.span`
@@ -20,8 +20,8 @@ const BetweenCalendars = styled.span`
 `;
 
 const StyledTable = styled.table`
-  border-collapse: separate;
-  border-spacing: 13px;
+  // border-collapse: separate;
+  // border-spacing: 5px;
 `;
 
 const CalendarView = (props) => (
