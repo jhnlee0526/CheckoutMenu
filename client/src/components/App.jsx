@@ -1,8 +1,13 @@
+/* eslint-disable max-len */
+/* eslint-disable react/no-children-prop */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable import/extensions */
 import React from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import moment from 'moment';
-import { createGlobalStyle } from "styled-components";
+
 import Calculations from './Calculations.jsx';
 import Loading from './Loading.jsx';
 import PropertyData from './PropertyData.jsx';
@@ -15,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const TotalWrapper = styled.div`
+  position: relative;
   border-radius: 10px;
   border: none;
   background: white;
@@ -23,8 +29,6 @@ const TotalWrapper = styled.div`
   height: 315px;
   padding: 10px;
   font-size: 12px;
-  // display: flex;
-  // justify-content: center;
   margin: auto;
 `;
 
@@ -92,9 +96,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // sending get request for room #3 -- will need to fix this to be whatever room number we go to
-    axios.get('http://localhost:3003/api/rooms/3/menu')
-      .then(({data}) => {
+    const roomId = Math.floor(Math.random() * 99) + 1;
+    axios.get(`http://localhost:3003/api/rooms/${roomId}/menu`)
+      .then(({ data }) => {
         console.log('react get request response: ', data);
         this.setState({
           propertyData: data,
@@ -122,13 +126,13 @@ class App extends React.Component {
 
   getAdultCount(adults) {
     this.setState({
-      adults: adults,
+      adults,
     });
   }
 
   getChildrenCount(children) {
     this.setState({
-      children: children,
+      children,
     });
   }
 
@@ -144,14 +148,14 @@ class App extends React.Component {
 
   handleNights(nights, checkIn, checkOut) {
     this.setState({
-      nights: nights,
+      nights,
       calendar: true,
-      checkIn: checkIn,
-      checkOut: checkOut,
+      checkIn,
+      checkOut,
       calculationsData: [
-        {cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5},
-        {serviceFee: Math.floor(this.state.propertyData.nightly_rate * nights * .12)},
-        {occupancyFee: Math.floor(this.state.propertyData.nightly_rate * nights * .11)},
+        { cleaningFee: (Math.floor(Math.random() * 16) + 5) * 5 },
+        { serviceFee: Math.floor(this.state.propertyData.nightly_rate * nights * 0.12) },
+        { occupancyFee: Math.floor(this.state.propertyData.nightly_rate * nights * 0.11) },
       ],
     });
     // this.componentDidMount();

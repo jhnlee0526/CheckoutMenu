@@ -1,10 +1,19 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-children-prop */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable import/extensions */
 import React from 'react';
 import styled from 'styled-components';
 import SingleGuest from './SingleGuest.jsx';
 
 const Dropdown = styled.div`
   display: inline-block;
-  position: fixed;
+  // position: fixed;
+  position: absolute;
   width: 200px;
   height: 215px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 16px;
@@ -13,6 +22,7 @@ const Dropdown = styled.div`
   border-radius: 4px;
   padding: 5px;
   cursor: default;
+  z-index: 80;
 `;
 
 const CloseButton = styled.button`

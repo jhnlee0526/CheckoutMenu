@@ -1,3 +1,9 @@
+/* eslint-disable react/no-children-prop */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/extensions */
 import React from 'react';
 import styled from 'styled-components';
 import Guests from './Guests.jsx';
@@ -27,7 +33,7 @@ const AllGuestsSizing = styled.div`
 `;
 
 const DownArrow = styled.img`
-  float: right; 
+  float: right;
   width: 15px;
   height: auto;
   cursor: pointer;
@@ -35,7 +41,7 @@ const DownArrow = styled.img`
 `;
 
 const UpArrow = styled.img`
-  float: right; 
+  float: right;
   width: 15px;
   height: auto;
   cursor: pointer;
@@ -151,7 +157,9 @@ class Dropdown extends React.Component {
             </GuestSizing>
             <AllGuestsSizing>
               <span>
-                {this.state.guests} {guests}
+                {this.state.guests}
+                {' '}
+                {guests}
               </span>
               <span>
                 {totalInfants}

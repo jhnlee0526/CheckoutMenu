@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -33,11 +35,12 @@ const CalculationItem = (props) => {
         {key}
       </Left>
       {/* <span> */}
-        {/* enter the question mark button  */}
+      {/* enter the question mark button  */}
       {/* </span> */}
       <Right>
         {/* edit if we want to change this to be a different amount */}
-        ${Object.values(props.data)[0]}
+        $
+        {Object.values(props.data)[0]}
       </Right>
     </LineItem>
   );

@@ -1,3 +1,8 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/extensions */
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -6,19 +11,22 @@ import SingleCalendar from './SingleCalendar.jsx';
 const Modal = styled.div`
   border-radius: 12px;
   background: white;
-  position: fixed;
+  // position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px;
   padding: 10px 15px;
   cursor: default;
   flex-wrap: wrap;
   width: 425px;
-  max-width: 100%;
+  // max-width: 100%;
   height: 310px;
-  max-height: 100%;
-  right: 35%;
+  // max-height: 100%;
+  right: 0px;
+  // right: 35%;
+  z-index: 100;
 `;
 
 const Container = styled.div`
@@ -40,7 +48,7 @@ const CheckContainer = styled.span`
   font-size: 8px;
 `;
 
-//on click, or when it is that component, it will have the border be black
+// on click, or when it is that component, it will have the border be black
 const CheckInDate = styled.div`
   border-radius: 5px;
   // border: 1px solid black;
@@ -52,7 +60,7 @@ const CheckInDate = styled.div`
   height: 20px;
 `;
 
-//on click, or when it is that component, it will have the border be black
+// on click, or when it is that component, it will have the border be black
 const CheckOutDate = styled.div`
   border-radius: 5px;
   // border: 1px solid black;
@@ -139,7 +147,7 @@ const Keeb = styled.img`
 
 const KeebSpan = styled.span`
   float: left;
-  // justify-content: 
+  // justify-content:
 `;
 
 const ClearClose = styled.span`
@@ -171,7 +179,7 @@ class CalendarModal extends React.Component {
     this.props.onClick();
     if (!this.state.checkOutDate && param !== undefined) {
       this.handleClear();
-    };
+    }
   }
 
   handleCheckInDate(date) {
@@ -199,11 +207,11 @@ class CalendarModal extends React.Component {
   }
 
   getNumberOfNights(checkOutDate) {
-    let endDate = moment(checkOutDate);
-    let startDate = moment(this.state.checkInDate);
-    let nights = endDate.diff(startDate, 'days');
+    const endDate = moment(checkOutDate);
+    const startDate = moment(this.state.checkInDate);
+    const nights = endDate.diff(startDate, 'days');
     this.setState({
-      nights: nights,
+      nights,
     });
     this.props.handleNights(nights, this.state.checkInDate, checkOutDate);
   }
@@ -234,7 +242,7 @@ class CalendarModal extends React.Component {
       for (let i = 0; i < allMonths.length; i++) {
         upcomingMonths.push(allMonths[i]);
         if (upcomingMonths.length === allMonths.length) {
-          this.setState({months: upcomingMonths});
+          this.setState({ months: upcomingMonths });
           break;
         }
       }
@@ -301,8 +309,8 @@ class CalendarModal extends React.Component {
             </SelectContainer>
             <CheckContainer>
               <div>
-              {checkInBox}
-              {checkOutBox}
+                {checkInBox}
+                {checkOutBox}
               </div>
             </CheckContainer>
           </Container>
