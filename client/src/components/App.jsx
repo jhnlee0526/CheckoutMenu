@@ -97,7 +97,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const roomId = Math.floor(Math.random() * 99) + 1;
-    axios.get(`http://localhost:3003/api/rooms/${roomId}/menu`)
+    axios.get(`http://localhost:3003/checkout/${roomId}/menu`)
       .then(({ data }) => {
         console.log('react get request response: ', data);
         this.setState({
@@ -186,7 +186,7 @@ class App extends React.Component {
       infants: this.state.infants,
     };
     console.log(reservationData);
-    axios.post(`http://localhost:3003/api/rooms/${reservationData.property_id}/menu`, reservationData)
+    axios.post(`http://localhost:3003/checkout/${reservationData.property_id}/menu`, reservationData)
       .then((res) => {
         console.log('axios post response: ', res);
       })
